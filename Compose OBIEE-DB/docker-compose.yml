@@ -1,0 +1,51 @@
+version: '2'
+services:
+  # fake service used as template for various versions
+  obiee_12c_template:
+    build:
+      context: ./OracleBIEE_fake_path ### will fail because doesn't exist ###
+      dockerfile: Dockerfile
+      depends_on: oracledb
+    environment:
+      - BI_CONFIG_RCU_PWD=Admin123
+    entrypoint: 
+      - /opt/oracle/wait-for-database.sh
+      - oracledb:1521/orclpdb1
+      - /opt/oracle/runOBIEE.sh
+    ports:
+      - "9500-9514:9500-9514"
+      - "9799:9799"
+    stdin_open: true
+    tty: true
+
+  # OBIEE 12.2.1.1.0 service
+  obiee_12.2.1.1.0:
+    extends:
+      service: obiee_12c_template
+    build:
+      context: ./OracleBIEE/12.2.1.1.0
+      dockerfile: Dockerfile
+    image: obiee:12.2.1.1.0
+    env_file:
+      - ./OracleBIEE/12.2.1.1.0/bi_config_param.env
+
+  # OBIEE 12.2.1.0.0 service
+  obiee_12.2.1.0.0:
+    extends:
+      service: obiee_12c_template
+    build:
+      context: ./OracleBIEE/12.2.1.0.0
+    image: obiee:12.2.1.0.0
+    env_file:
+      - ./OracleBIEE/12.2.1.0.0/bi_config_param.env
+
+  # Oracle Database service
+  oracledb:
+    build:
+      context: ./OracleDatabase/12.1.0.2
+      dockerfile: Dockerfile.ee
+    image: database:12.1.0.2
+    environment:
+      - ORACLE_PWD=Admin123
+    ports:
+      - "1521:1521"
