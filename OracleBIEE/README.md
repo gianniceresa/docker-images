@@ -31,7 +31,7 @@ Before you build the image make sure that you have provided the installation bin
 ### Running Oracle Business Intelligence in a Docker container
 
 #### First run of Oracle Business Intelligence in a Docker container
-Before to run the OBIEE container for the first time review and adapt the settinges in the [./12.2.1.1.0/bi_config_param.env](./12.2.1.1.0/bi_config_param.env) file and adjust ad needed.
+Before to run the OBIEE container for the first time review and adapt the settinges in the [./12.2.1.1.0/bi_config_param.env](./12.2.1.1.0/bi_config_param.env) file and adjust as needed (database host, user, password etc.).
 To run your OBIEE Docker image use the **docker run** command as follows:
 ```
   docker run --name obiee -p 9500-9514:9500-9514 -p 9799:9799 --env-file ./12.2.1.1.0/bi_config_param.env --link <your DB container name> oracle/obiee:12.2.1.1.0
