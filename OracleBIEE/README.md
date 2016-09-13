@@ -31,6 +31,7 @@ Before you build the image make sure that you have provided the installation bin
 ### Running Oracle Business Intelligence in a Docker container
 
 #### First run of Oracle Business Intelligence in a Docker container
+Before to run the OBIEE container for the first time review and adapt the settinges in the [./12.2.1.1.0/bi_config_param.env](./12.2.1.1.0/bi_config_param.env) file and adjust ad needed.
 To run your OBIEE Docker image use the **docker run** command as follows:
 ```
   docker run --name obiee -p 9500-9514:9500-9514 -p 9799:9799 --env-file ./12.2.1.1.0/bi_config_param.env --link <your DB container name> oracle/obiee:12.2.1.1.0
@@ -48,3 +49,45 @@ Once the container has been started and OBIEE configured and started you can con
   http://localhost:9500/em
   http://localhost:9502/analytics
 ```
+
+#### Stop / Start of Oracle Business Intelligence after first execution
+Once the **docker run** has been used to configure OBIEE and start it for the first time it's possible to easily stop it with the following command:
+```
+ docker stop -t 120 <container-id>
+ 
+ Parameters:
+    -t: the number of seconds to wait for OBIEE to shutdown before to kill everything (default is 10, a bit short for OBIEE to shutdown in a clean way)
+```
+To start the container again simply use:
+```
+  dockr start <container-id>
+```
+
+#### Useful commands
+```
+  docker port <container-id>
+```
+List the ports exposed by the container and the links with the hosts ports.
+```
+  docker logs -f <container-id>
+```
+Display the "live" output from the container (a log file).
+```
+  docker exec -it <container-id> bash
+```
+Open an interactive bash into the container.
+```
+  docker exec <container-id> /opt/oracle/biee/user_projects/domains/bi/bitools/bin/status.sh -v
+```
+Display status and ports used by components of OBIEE.
+
+## Support
+Currently Oracle Business Intelligence on Docker is **NOT** supported by Oracle (AFAIK). Use these files at your own discretion.
+
+## License
+To download and run Oracle Business Intelligence, regardless whether inside or outside a Docker container, you must download the binaries from the Oracle website and accept the license indicated at that page.
+
+All scripts and files hosted in this project and GitHub [docker-images/OracleBIEE](./) repository required to build the Docker images are, unless otherwise noted, released under the Common Development and Distribution License (CDDL) 1.0 and GNU Public License 2.0 licenses.
+
+## Copyright
+Copyright (c) 2016 DATAlysis GmbH. All rights reserved.
