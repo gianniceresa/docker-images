@@ -4,18 +4,18 @@
 #
 # OBIEE DOCKERFILES PROJECT
 # --------------------------
-# This is the Dockerfile for Oracle Business Intelligence 12.2.1.1.0 SampleAppLite
+# This is the Dockerfile for Oracle Business Intelligence 12.2.1.0.0 SampleAppLite
 # 
 # REQUIRED FILES TO BUILD THIS IMAGE
 # ----------------------------------
-# (1) fmw_12.2.1.1.0_infrastructure_Disk1_1of1.zip
-#     fmw_12.2.1.1.0_bi_linux64_Disk1_1of2.zip
-#     fmw_12.2.1.1.0_bi_linux64_Disk1_2of2.zip
+# (1) fmw_12.2.1.0.0_infrastructure_Disk1_1of1.zip
+#     fmw_12.2.1.0.0_bi_linux64_Disk1_1of2.zip
+#     fmw_12.2.1.0.0_bi_linux64_Disk1_2of2.zip
 #     Download Oracle Business Intelligence 12.2.1.1.0 for Linux x64
-#     from http://www.oracle.com/technetwork/middleware/bi-enterprise-edition/downloads/business-intelligence-3046226.html
-# (2) jdk-8u101-linux-x64.rpm
-#     Download Oracle JDK 1.8.77+
-#     from http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+#     from http://www.oracle.com/technetwork/middleware/bi-enterprise-edition/downloads/business-intelligence-2717951.html
+# (2) jdk-8u51-linux-x64.rpm
+#     Download Oracle JDK 1.8.51+
+#     from http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html
 #
 # HOW TO BUILD THIS IMAGE
 # -----------------------
@@ -33,10 +33,10 @@ MAINTAINER Gianni Ceresa <gianni.ceresa@datalysis.ch>
 
 # Environment variables required for this build (do NOT change)
 # --------------------------------------------------------------
-ENV INSTALL_FILE_JDK="jdk-8u101-linux-x64.rpm"                       \
-    INSTALL_FILE_WLS="fmw_12.2.1.1.0_infrastructure_Disk1_1of1.zip"  \
-    INSTALL_FILE_BI_1="fmw_12.2.1.1.0_bi_linux64_Disk1_1of2.zip"     \
-    INSTALL_FILE_BI_2="fmw_12.2.1.1.0_bi_linux64_Disk1_2of2.zip"     \
+ENV INSTALL_FILE_JDK="jdk-8u51-linux-x64.rpm"                        \
+    INSTALL_FILE_WLS="fmw_12.2.1.0.0_infrastructure_Disk1_1of1.zip"  \
+    INSTALL_FILE_BI_1="fmw_12.2.1.0.0_bi_linux64_Disk1_1of2.zip"     \
+    INSTALL_FILE_BI_2="fmw_12.2.1.0.0_bi_linux64_Disk1_2of2.zip"     \
     INSTALL_FILE_RSP_WLS="weblogic.rsp"                              \
     INSTALL_FILE_RSP_BI="obiee.rsp"                                  \
     INSTALL_FILE_RSP_CONFIG="bi_config.rsp"                          \
@@ -89,13 +89,13 @@ USER oracle
 RUN cd $INSTALL_DIR                       && \
     unzip $INSTALL_FILE_WLS -d ./tmp_wls  && \
     rm $INSTALL_FILE_WLS                  && \
-    java -jar $INSTALL_DIR/tmp_wls/fmw_12.2.1.1.0_infrastructure.jar -silent -responseFile $ORACLE_BASE/$INSTALL_FILE_RSP_WLS -invPtrLoc $ORACLE_BASE/oraInst.loc && \
+    java -jar $INSTALL_DIR/tmp_wls/fmw_12.2.1.0.0_infrastructure.jar -silent -responseFile $ORACLE_BASE/$INSTALL_FILE_RSP_WLS -invPtrLoc $ORACLE_BASE/oraInst.loc && \
     rm -rf $INSTALL_DIR/tmp_wls           && \
     unzip $INSTALL_FILE_BI_1 -d ./tmp_bi  && \
     rm $INSTALL_FILE_BI_1                 && \
     unzip $INSTALL_FILE_BI_2 -d ./tmp_bi  && \
     rm $INSTALL_FILE_BI_2                 && \
-    ./tmp_bi/bi_platform-12.2.1.1.0_linux64.bin  -silent -responseFile $ORACLE_BASE/$INSTALL_FILE_RSP_BI -invPtrLoc $ORACLE_BASE/oraInst.loc && \
+    ./tmp_bi/bi_platform-12.2.1.0.0_linux64.bin  -silent -responseFile $ORACLE_BASE/$INSTALL_FILE_RSP_BI -invPtrLoc $ORACLE_BASE/oraInst.loc && \
     rm -rf $INSTALL_DIR/tmp_bi            && \
     rm -rf $INSTALL_DIR
 
