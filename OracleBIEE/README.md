@@ -64,22 +64,22 @@ To start the container again simply use:
 ```
 
 #### Useful commands
+List the ports exposed by the container and the links with the hosts ports :
 ```
   docker port <container-id>
 ```
-List the ports exposed by the container and the links with the hosts ports.
+Display the "live" output from the container (a log file) :
 ```
   docker logs -f <container-id>
 ```
-Display the "live" output from the container (a log file).
+Open an interactive bash into the container :
 ```
   docker exec -it <container-id> bash
 ```
-Open an interactive bash into the container.
+Display status and ports used by components of OBIEE :
 ```
   docker exec <container-id> /opt/oracle/biee/user_projects/domains/bi/bitools/bin/status.sh -v
 ```
-Display status and ports used by components of OBIEE.
 
 ## Support
 Currently Oracle Business Intelligence on Docker is **NOT** supported by Oracle (AFAIK). Use these files at your own discretion.
@@ -90,4 +90,4 @@ To download and run Oracle Business Intelligence, regardless whether inside or o
 All scripts and files hosted in this project and GitHub [docker-images/OracleBIEE](./) repository required to build the Docker images are, unless otherwise noted, released under the Common Development and Distribution License (CDDL) 1.0 and GNU Public License 2.0 licenses.
 
 ## Copyright
-Copyright (c) 2016 DATAlysis GmbH. All rights reserved.
+Copyright (c) 2016 [DATAlysis GmbH](https://datalysis.ch). All rights reserved.
