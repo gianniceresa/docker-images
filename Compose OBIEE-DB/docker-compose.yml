@@ -1,11 +1,11 @@
 version: '2'
+
 services:
   # fake service used as template for various versions
   obiee_12c_template:
     build:
-      context: ./OracleBIEE_fake_path ### will fail because doesn't exist ###
+      context: ./OracleBIEE   ### will fail because doesn't exist ###
       dockerfile: Dockerfile
-      depends_on: oracledb
     environment:
       - BI_CONFIG_RCU_PWD=Admin123
     entrypoint: 
@@ -24,7 +24,8 @@ services:
       service: obiee_12c_template
     build:
       context: ./OracleBIEE/12.2.1.1.0
-      dockerfile: Dockerfile
+    depends_on:
+      - oracledb
     image: obiee:12.2.1.1.0
     env_file:
       - ./OracleBIEE/12.2.1.1.0/bi_config_param.env
@@ -35,6 +36,8 @@ services:
       service: obiee_12c_template
     build:
       context: ./OracleBIEE/12.2.1.0.0
+    depends_on:
+      - oracledb
     image: obiee:12.2.1.0.0
     env_file:
       - ./OracleBIEE/12.2.1.0.0/bi_config_param.env
