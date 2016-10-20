@@ -18,6 +18,18 @@ services:
     stdin_open: true
     tty: true
 
+  # OBIEE 12.2.1.2.0 service
+  obiee_12.2.1.2.0:
+    extends:
+      service: obiee_12c_template
+    build:
+      context: ./OracleBIEE/12.2.1.2.0
+    depends_on:
+      - oracledb
+    image: obiee:12.2.1.2.0
+    env_file:
+      - ./OracleBIEE/12.2.1.2.0/bi_config_param.env
+
   # OBIEE 12.2.1.1.0 service
   obiee_12.2.1.1.0:
     extends:
