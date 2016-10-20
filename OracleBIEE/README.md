@@ -3,7 +3,7 @@ Oracle Business Intelligence
 Sample Docker build files to facilitate installation, configuration, and environment setup for DevOps users. For more information about Oracle Business Intelligence please see the [Oracle Business Intelligence Documentation](http://docs.oracle.com/middleware/12211/index.html).
 
 ## How to build and run
-This project offers sample Dockerfiles for OBIEE 12c (12.2.1.0.0 and 12.2.1.1.0). To assist in building the images, you can use the [buildDockerImage.sh](buildDockerImage.sh) script. See below for instructions and usage.
+This project offers sample Dockerfiles for OBIEE 12c (12.2.1.0.0, 12.2.1.1.0 and 12.2.1.2.0). To assist in building the images, you can use the [buildDockerImage.sh](buildDockerImage.sh) script. See below for instructions and usage.
 
 The `buildDockerImage.sh` script is just a utility shell script that performs MD5 checks and is an easy way for beginners to get started. Expert users are welcome to directly call `docker build` with their prefered set of parameters.
 
@@ -19,7 +19,7 @@ Before you build the image make sure that you have provided the installation bin
   
   Parameters:
      -v: version to build
-         Choose one of: 12.2.1.0.0  12.2.1.1.0
+         Choose one of: 12.2.1.0.0  12.2.1.1.0  12.2.1.2.0
      -i: ignores the MD5 checksums
   
   LICENSE CDDL 1.0 + GPL 2.0
@@ -31,10 +31,10 @@ Before you build the image make sure that you have provided the installation bin
 ### Running Oracle Business Intelligence in a Docker container
 
 #### First run of Oracle Business Intelligence in a Docker container
-Before to run the OBIEE container for the first time review and adapt the settinges in the [./12.2.1.1.0/bi_config_param.env](./12.2.1.1.0/bi_config_param.env) file and adjust as needed (database host, user, password etc.).
+Before to run the OBIEE container for the first time review and adapt the settinges in the [./12.2.1.2.0/bi_config_param.env](./12.2.1.2.0/bi_config_param.env) file and adjust as needed (database host, user, password etc.).
 To run your OBIEE Docker image use the **docker run** command as follows:
 ```
-  docker run --name obiee -p 9500-9514:9500-9514 -p 9799:9799 --env-file ./12.2.1.1.0/bi_config_param.env --link <your DB container name> oracle/obiee:12.2.1.1.0
+  docker run --name obiee -p 9500-9514:9500-9514 -p 9799:9799 --env-file ./12.2.1.2.0/bi_config_param.env --link <your DB container name> oracle/obiee:12.2.1.2.0
   
   Parameters:
      --name:     The name of the container itself
