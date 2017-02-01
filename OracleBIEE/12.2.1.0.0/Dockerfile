@@ -25,7 +25,7 @@
 #
 # Pull base image
 # ---------------
-FROM oraclelinux:latest
+FROM oraclelinux:7.1
 
 # Maintainer
 # ----------
