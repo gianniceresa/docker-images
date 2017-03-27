@@ -68,7 +68,7 @@ For example :
 ```
   docker run -d --rm --name bi-bvt -v /home/oracle/BVT/config.xml:/opt/config.xml:Z -v /home/oracle/BVT/Results:/opt/BVT/Results:Z oracle/obi-bvt xvfb-run ./bin/obibvt -config /opt/config.xml -deployment PreUpgrade
 ```
-Will execute BVT in the background and delete the container once done. BVT is executed using the `/home/oracle/BVT/config.xml` file and against the "PreUpgrade" deployment. The result of BVT will be stored in /home/oracle/BVT/Results on the host. The same command can be used for a different deployment and finally use another container to compare the results.
+Will execute BVT in the background and delete the container once done. BVT is executed using the `/home/oracle/BVT/config.xml` file and against the "PreUpgrade" deployment. The result of BVT will be stored in `/home/oracle/BVT/Results` on the host. The same command can be used for a different deployment and finally use another container to compare the results.
 
 ## Support
 Currently Oracle BI BVT on Docker is **NOT** supported by Oracle (AFAIK). Use these files at your own discretion.
