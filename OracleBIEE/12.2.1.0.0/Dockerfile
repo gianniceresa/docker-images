@@ -52,7 +52,7 @@ ENV INSTALL_DIR=$ORACLE_BASE/install                                 \
 # Copy binaries
 # -------------
 COPY $INSTALL_FILE_JDK $INSTALL_FILE_WLS $INSTALL_FILE_BI_1 $INSTALL_FILE_BI_2 $INSTALL_DIR/
-COPY $INSTALL_FILE_RSP_WLS $INSTALL_FILE_RSP_BI $INSTALL_FILE_RSP_CONFIG $RUN_FILE _configureOBIEE.sh _dropRCU.sh _validateRCU.sh $ORACLE_BASE/
+COPY $INSTALL_FILE_RSP_WLS $INSTALL_FILE_RSP_BI $INSTALL_FILE_RSP_CONFIG $RUN_FILE _configureOBIEE.sh _dropRCU.sh $ORACLE_BASE/
 
 # Setup filesystem and oracle user
 # Adjust file permissions, go to /opt/oracle as user 'oracle' to proceed with Oracle Business Intelligence installation

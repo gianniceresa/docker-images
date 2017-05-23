@@ -100,17 +100,6 @@ RCU_SETTINGS="$RCU_SETTINGS $DBCONN_PARAM"
 RCU_SETTINGS="$RCU_SETTINGS $COMPONENTS"
 
 #
-# validate RCU drop command and settings 
-#
-$ORACLE_HOME/oracle_common/bin/rcu $RCU_SETTINGS -validate <<< $BI_CONFIG_RCU_PWD
-
-if [ $? -ne 0 ]; then
-  echo "ERROR validating RCU command and settings, can't drop RCU schemas"
-  echo "command: $ORACLE_HOME/oracle_common/bin/rcu $RCU_SETTINGS -validate <<< '$BI_CONFIG_RCU_PWD'"
-  exit 1
-fi
-
-#
 # drop RCU schemas
 #
 $ORACLE_HOME/oracle_common/bin/rcu $RCU_SETTINGS <<< $BI_CONFIG_RCU_PWD

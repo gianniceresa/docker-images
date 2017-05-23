@@ -37,13 +37,7 @@ function _kill() {
 ############# Configure OBIEE ################
 function configureOBIEE {
   echo "Configure OBIEE"
-  $ORACLE_BASE/_validateRCU.sh
-  if [ $? -ne 0 ]; then
-    echo "Abort OBIEE configuration..."
-    exit 1
-  else
-    $ORACLE_BASE/_configureOBIEE.sh
-  fi
+  $ORACLE_BASE/_configureOBIEE.sh
 }
 
 ############# Check OBIEE ################
