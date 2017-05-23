@@ -1,48 +1,81 @@
 #!/bin/bash
 
+#
+# File: runOBIEE.sh
+# Purpose: Auto start/stop of OBIEE 12c in Docker container
+# Author: Gianni Ceresa (gianni.ceresa@datalysis.ch), April 2017
+# Absolutely no warranty, use at your own risk
+# Please include this header in any copy or reuse of the script you make
+#
+
+# env variables set by Dockerfile
+# ORACLE_BASE=/opt/oracle
+# ORACLE_HOME=/opt/oracle/product/<version>
+# DOMAIN_HOME=/opt/oracle/config/domains
+
 ########### SIGTERM handler ############
 function _term() {
-   echo "Stopping container."
-   echo "SIGTERM received, shutting down OBIEE!"
-   ###ORACLE_HOME###/user_projects/domains/$BI_CONFIG_DOMAINE_NAME/bitools/bin/stop.sh
+  echo "Stopping container."
+  echo "SIGTERM received, shutting down OBIEE!"
+  stopOBIEE;
+  # drop RCU on exit?
+  if [ "$DROP_RCU_ON_EXIT" = true ]; then
+    dropRCU;
+  fi;
 }
 
 ########### SIGKILL handler ############
 function _kill() {
-   echo "SIGKILL received, shutting down OBIEE!"
-   ###ORACLE_HOME###/user_projects/domains/$BI_CONFIG_DOMAINE_NAME/bitools/bin/stop.sh
+  echo "SIGKILL received, shutting down OBIEE!"
+  stopOBIEE;
+  # drop RCU on exit?
+  if [ "$DROP_RCU_ON_EXIT" = true ]; then
+    dropRCU;
+  fi;
 }
 
 ############# Configure OBIEE ################
 function configureOBIEE {
-   ###ORACLE_HOME###/bi/bin/config.sh -silent -responseFile ###ORACLE_BASE###/bi_config.rsp -invPtrLoc ###ORACLE_BASE###/oraInst.loc
+  echo "Configure OBIEE"
+  $ORACLE_BASE/_validateRCU.sh
+  if [ $? -ne 0 ]; then
+    echo "Abort OBIEE configuration..."
+    exit 1
+  else
+    $ORACLE_BASE/_configureOBIEE.sh
+  fi
 }
 
 ############# Check OBIEE ################
 function checkOBIEEConfigured {
-   # check if /user_projects/domains/$BI_CONFIG_DOMAINE_NAME exists
-   if [ -d "###ORACLE_HOME###/user_projects/domains/$BI_CONFIG_DOMAINE_NAME" ]; then
-      echo "1";
-   else
-      echo "0";
-   fi;
+  # check if /user_projects/domains/$BI_CONFIG_DOMAINE_NAME exists
+  if [ -d "$DOMAIN_HOME/$BI_CONFIG_DOMAINE_NAME" ]; then
+    echo "1"
+  else
+    echo "0"
+  fi;
 }
 
-############# Replace config values in RSP file #############
-function customizeRSP {
-   sed -i -e "s|###BI_CONFIG_DOMAINE_NAME###|$BI_CONFIG_DOMAINE_NAME|g"     ###ORACLE_BASE###/bi_config.rsp
-   sed -i -e "s|###BI_CONFIG_ADMIN_USER###|$BI_CONFIG_ADMIN_USER|g"         ###ORACLE_BASE###/bi_config.rsp
-   sed -i -e "s|###BI_CONFIG_ADMIN_PWD###|$BI_CONFIG_ADMIN_PWD|g"           ###ORACLE_BASE###/bi_config.rsp
-   sed -i -e "s|###BI_CONFIG_RCU_DBSTRING###|$BI_CONFIG_RCU_DBSTRING|g"     ###ORACLE_BASE###/bi_config.rsp
-   sed -i -e "s|###BI_CONFIG_RCU_USER###|$BI_CONFIG_RCU_USER|g"             ###ORACLE_BASE###/bi_config.rsp
-   sed -i -e "s|###BI_CONFIG_RCU_PWD###|$BI_CONFIG_RCU_PWD|g"               ###ORACLE_BASE###/bi_config.rsp
-   sed -i -e "s|###BI_CONFIG_RCU_DB_PREFIX###|$BI_CONFIG_RCU_DB_PREFIX|g"   ###ORACLE_BASE###/bi_config.rsp
-   sed -i -e "s|###BI_CONFIG_RCU_NEW_DB_PWD###|$BI_CONFIG_RCU_NEW_DB_PWD|g" ###ORACLE_BASE###/bi_config.rsp
+############# Drop OBIEE RCU schemas ################
+function dropRCU {
+  echo "Dropping RCU schemas"
+  $ORACLE_BASE/_dropRCU.sh
 }
 
 ############# Start OBIEE ################
 function startOBIEE {
-   ###ORACLE_HOME###/user_projects/domains/$BI_CONFIG_DOMAINE_NAME/bitools/bin/start.sh
+  echo "Starting OBIEE"
+  $DOMAIN_HOME/$BI_CONFIG_DOMAINE_NAME/bitools/bin/start.sh
+}
+
+############# Stop OBIEE ################
+function stopOBIEE {
+  echo "Stopping OBIEE"
+  $DOMAIN_HOME/$BI_CONFIG_DOMAINE_NAME/bitools/bin/stop.sh
+  # delete _WLS_ADMINSERVER000000.DAT and _WLS_BI_SERVER1000000.DAT as they often give issues on restart
+  echo "Deleting Weblogic Store files ..."
+  rm -f $DOMAIN_HOME/$BI_CONFIG_DOMAINE_NAME/servers/AdminServer/data/store/default/*.DAT
+  rm -f $DOMAIN_HOME/$BI_CONFIG_DOMAINE_NAME/servers/bi_server1/data/store/default/*.DAT
 }
 
 ############# MAIN ################
@@ -53,28 +86,34 @@ trap _term SIGTERM
 # Set SIGKILL handler
 trap _kill SIGKILL
 
-# Default for ORACLE_HOME
-if [ "$ORACLE_HOME" == "" ]; then
-   export ORACLE_HOME=###ORACLE_HOME###
+# - BI_CONFIG_DOMAINE_NAME env variable
+if [ "$BI_CONFIG_DOMAINE_NAME" == "" ]; then
+  BI_CONFIG_DOMAINE_NAME=bi
+  echo "BI_CONFIG_DOMAINE_NAME not defined, default: $BI_CONFIG_DOMAINE_NAME"
+fi;
+
+# - DROP_RCU_ON_EXIT env variable (default "false")
+if [ "$DROP_RCU_ON_EXIT" == "" ]; then
+  DROP_RCU_ON_EXIT=false
+  echo "DROP_RCU_ON_EXIT not defined, default: $DROP_RCU_ON_EXIT"
+else
+  echo "DROP_RCU_ON_EXIT defined, value: $DROP_RCU_ON_EXIT"
 fi;
 
 # Check whether OBIEE is already configured
 if [ "`checkOBIEEConfigured`" == "0" ]; then
-   # Replace placeholders in the config RSP file with provided values
-   customizeRSP;
-   # Execute the configuration of OBIEE
-   configureOBIEE;
+  # Execute the configuration of OBIEE
+  configureOBIEE;
 else
-   # Start OBIEE
-   startOBIEE;
+  # Start OBIEE
+  startOBIEE;
 fi;
 
 
 echo "#########################"
-###ORACLE_HOME###/user_projects/domains/$BI_CONFIG_DOMAINE_NAME/bitools/bin/status.sh
+$DOMAIN_HOME/$BI_CONFIG_DOMAINE_NAME/bitools/bin/status.sh
 echo "#########################"
 
-tail -f ###ORACLE_HOME###/user_projects/domains/$BI_CONFIG_DOMAINE_NAME/servers/obis1/logs/obis1.out &
+tail -f $DOMAIN_HOME/$BI_CONFIG_DOMAINE_NAME/servers/obis1/logs/obis1.out &
 childPID=$!
 wait $childPID
-

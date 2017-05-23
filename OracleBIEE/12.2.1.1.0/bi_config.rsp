@@ -30,7 +30,7 @@ SERVICE_INSTANCE_MODE=SINGLE
 DOMAIN_NAME=###BI_CONFIG_DOMAINE_NAME###
 
 #The directory in which the domain home directory will be created
-DOMAINS_DIR=###ORACLE_HOME###/user_projects/domains
+DOMAINS_DIR=###DOMAIN_HOME###
 
 #Specify the administrator username.
 ADMIN_USER_NAME=###BI_CONFIG_ADMIN_USER###
