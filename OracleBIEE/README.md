@@ -34,12 +34,17 @@ Before you build the image make sure that you have provided the installation bin
 The first execution will be longer than next stop/start because OBIEE must be configured. Many parameters can be adjusted and 2 are mandatory to run the image or it will fail.
 To run your OBIEE Docker image use the **docker run** command as follows:
 ```
-  docker run --name obiee -p 9500-9514:9500-9514 -p 9799:9799 --stop-timeout 600 -e "BI_CONFIG_RCU_DBSTRING=192.168.120.80:1521:orclpdb1" -e "BI_CONFIG_RCU_PWD=Admin123" oracle/obiee:12.2.1.2.0
+  docker run --name obiee \
+             -p 9500-9514:9500-9514 -p 9799:9799 \
+             --stop-timeout 600 \
+             -e "BI_CONFIG_RCU_DBSTRING=192.168.120.80:1521:orclpdb1" \
+             -e "BI_CONFIG_RCU_PWD=Admin123" \
+             oracle/obiee:12.2.1.2.0
   
   Parameters:
-     --name:         The name of the container itself
-     -p:             The port mapping of the host port to the container port. -P can be used for automatic mapping to random ports
-     --stop-timeout: Override the default timeout when a container stop. OBIEE requires longer for a clean shutdown
+     --name :         The name of the container itself
+     -p :             The port mapping of the host port to the container port. -P can be used for automatic mapping to random ports
+     --stop-timeou t: Override the default timeout when a container stop. OBIEE requires longer for a clean shutdown
      -e VARIABLE_NAME=variable_value : Define some variables used to configure and run the container.
      
   Mandatory variables:
@@ -85,7 +90,12 @@ Display status and ports used by components of OBIEE :
 ```
 Run an ephemeral OBIEE container which will drop RCU and will be destroyed when stopped :
 ```
-  docker run -d -P --rm --stop-timeout 600 -e "BI_CONFIG_RCU_DBSTRING=192.168.120.80:1521:orclpdb1" -e "BI_CONFIG_RCU_PWD=Admin123" -e "DROP_RCU_ON_EXIT=true" oracle/obiee:12.2.1.2.0
+  docker run -d -P --rm \
+             --stop-timeout 600 \
+             -e "BI_CONFIG_RCU_DBSTRING=192.168.120.80:1521:orclpdb1" \
+             -e "BI_CONFIG_RCU_PWD=Admin123" \
+             -e "DROP_RCU_ON_EXIT=true" \
+             oracle/obiee:12.2.1.2.0
 ```
 
 #### Available variables
