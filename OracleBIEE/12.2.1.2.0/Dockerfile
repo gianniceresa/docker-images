@@ -25,7 +25,7 @@
 #
 # Pull base image
 # ---------------
-FROM oraclelinux:latest
+FROM oraclelinux:7-slim
 
 # Maintainer
 # ----------
@@ -37,24 +37,26 @@ ENV INSTALL_FILE_JDK="jdk-8u101-linux-x64.rpm"                       \
     INSTALL_FILE_WLS="fmw_12.2.1.2.0_infrastructure_Disk1_1of1.zip"  \
     INSTALL_FILE_BI_1="fmw_12.2.1.2.0_bi_linux64_Disk1_1of2.zip"     \
     INSTALL_FILE_BI_2="fmw_12.2.1.2.0_bi_linux64_Disk1_2of2.zip"     \
+    OBIEE_VERSION="12.2.1.2.0"                                       \
     INSTALL_FILE_RSP_WLS="weblogic.rsp"                              \
     INSTALL_FILE_RSP_BI="obiee.rsp"                                  \
     INSTALL_FILE_RSP_CONFIG="bi_config.rsp"                          \
     RUN_FILE="runOBIEE.sh"                                           \
-    ORACLE_BASE=/opt/oracle                                          \
-    ORACLE_HOME=/opt/oracle/biee
+    ORACLE_BASE=/opt/oracle
 
 # Use second ENV so that variable get substituted
-ENV INSTALL_DIR=$ORACLE_BASE/install
+ENV INSTALL_DIR=$ORACLE_BASE/install                                 \
+    ORACLE_HOME=$ORACLE_BASE/product/$OBIEE_VERSION                  \
+    DOMAIN_HOME=$ORACLE_BASE/config/domains
 
 # Copy binaries
 # -------------
 COPY $INSTALL_FILE_JDK $INSTALL_FILE_WLS $INSTALL_FILE_BI_1 $INSTALL_FILE_BI_2 $INSTALL_DIR/
-COPY $INSTALL_FILE_RSP_WLS $INSTALL_FILE_RSP_BI $INSTALL_FILE_RSP_CONFIG $RUN_FILE $ORACLE_BASE/
+COPY $INSTALL_FILE_RSP_WLS $INSTALL_FILE_RSP_BI $INSTALL_FILE_RSP_CONFIG $RUN_FILE _configureOBIEE.sh _dropRCU.sh _validateRCU.sh $ORACLE_BASE/
 
 # Setup filesystem and oracle user
 # Adjust file permissions, go to /opt/oracle as user 'oracle' to proceed with Oracle Business Intelligence installation
-# Install pre-req packages + Oracle JDK + get rid of previous JDK if any
+# Install pre-req packages + Oracle JDK
 # Make sure the run file is executable
 # -----------------------------------------------------------------------
 RUN chmod ug+x $INSTALL_DIR/$INSTALL_FILE_JDK                                   && \
@@ -70,17 +72,22 @@ RUN chmod ug+x $INSTALL_DIR/$INSTALL_FILE_JDK                                   
     touch $ORACLE_BASE/oraInst.loc                                              && \
     echo inventory_loc=$ORACLE_BASE/oraInventory >  $ORACLE_BASE/oraInst.loc    && \
     echo inst_group= >> $ORACLE_BASE/oraInst.loc                                && \
+    mkdir -p $ORACLE_HOME                                                       && \
+    mkdir -p $DOMAIN_HOME                                                       && \
     chown -R oracle:dba $ORACLE_BASE                                            && \
     chmod ug+x $ORACLE_BASE/$RUN_FILE
 
 
-# Replace place holders
+# Replace place holders (and force /dev/urandom for java)
 # ---------------------
 RUN sed -i -e "s|###ORACLE_HOME###|$ORACLE_HOME|g"   $ORACLE_BASE/$INSTALL_FILE_RSP_WLS     && \
     sed -i -e "s|###ORACLE_HOME###|$ORACLE_HOME|g"   $ORACLE_BASE/$INSTALL_FILE_RSP_BI      && \
     sed -i -e "s|###ORACLE_HOME###|$ORACLE_HOME|g"   $ORACLE_BASE/$INSTALL_FILE_RSP_CONFIG  && \
+    sed -i -e "s|###DOMAIN_HOME###|$DOMAIN_HOME|g"   $ORACLE_BASE/$INSTALL_FILE_RSP_CONFIG  && \
     sed -i -e "s|###ORACLE_HOME###|$ORACLE_HOME|g"   $ORACLE_BASE/$RUN_FILE                 && \
-    sed -i -e "s|###ORACLE_BASE###|$ORACLE_BASE|g"   $ORACLE_BASE/$RUN_FILE
+    sed -i -e "s|###ORACLE_BASE###|$ORACLE_BASE|g"   $ORACLE_BASE/$RUN_FILE                 && \
+    sed -i -e "s|source=file:/dev/random|source=file:/dev/urandom|g"     /usr/java/default/jre/lib/security/java.security  && \
+    sed -i -e "s|source=file:/dev/urandom|source=file:/dev/./urandom|g"  /usr/java/default/jre/lib/security/java.security
 
 # Start installation
 # -------------------
@@ -89,23 +96,22 @@ USER oracle
 RUN cd $INSTALL_DIR                       && \
     unzip $INSTALL_FILE_WLS -d ./tmp_wls  && \
     rm $INSTALL_FILE_WLS                  && \
-    java -jar $INSTALL_DIR/tmp_wls/fmw_12.2.1.2.0_infrastructure.jar -silent -responseFile $ORACLE_BASE/$INSTALL_FILE_RSP_WLS -invPtrLoc $ORACLE_BASE/oraInst.loc && \
+    java -jar $(find $INSTALL_DIR/tmp_wls -name *.jar) -silent -responseFile $ORACLE_BASE/$INSTALL_FILE_RSP_WLS -invPtrLoc $ORACLE_BASE/oraInst.loc && \
     rm -rf $INSTALL_DIR/tmp_wls           && \
     unzip $INSTALL_FILE_BI_1 -d ./tmp_bi  && \
     rm $INSTALL_FILE_BI_1                 && \
     unzip $INSTALL_FILE_BI_2 -d ./tmp_bi  && \
     rm $INSTALL_FILE_BI_2                 && \
-    ./tmp_bi/bi_platform-12.2.1.2.0_linux64.bin  -silent -responseFile $ORACLE_BASE/$INSTALL_FILE_RSP_BI -invPtrLoc $ORACLE_BASE/oraInst.loc && \
+    $(find $INSTALL_DIR/tmp_bi -name *.bin) -silent -responseFile $ORACLE_BASE/$INSTALL_FILE_RSP_BI -invPtrLoc $ORACLE_BASE/oraInst.loc && \
     rm -rf $INSTALL_DIR/tmp_bi            && \
     rm -rf $INSTALL_DIR
 
-# Expose ports
+# Set work directory & Expose ports
 #--------------
 
-WORKDIR $ORACLE_HOME
+WORKDIR $ORACLE_BASE
 
 EXPOSE 9500-9514 9799
-    
+
 # Define default command to start Oracle Business intelligence. 
 CMD $ORACLE_BASE/$RUN_FILE
-
