@@ -41,7 +41,8 @@ COPY $INSTALL_FILE_OBIBVT $INSTALL_DIR/
 # Fix a missing library because too old
 # Unzip Orable BI BVT
 # -----------------------------------------------------------------------
-RUN yum -y install unzip which java-1.8.0-openjdk                     && \
+RUN yum -y update                                                     && \
+    yum -y install unzip which java-1.8.0-openjdk                     && \
     yum-config-manager --enable ol7_optional_latest                   && \
     yum -y install xorg-x11-server-Xvfb                               && \
     yum -y install libpng12 libXtst gstreamer gstreamer-plugins-base  && \
