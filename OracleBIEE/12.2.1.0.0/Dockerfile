@@ -64,6 +64,7 @@ RUN chmod ug+x $INSTALL_DIR/$INSTALL_FILE_JDK                                   
     groupadd -g 501 oinstall                                                    && \
     useradd -d /home/oracle -g dba -G oinstall,dba -m -s /bin/bash oracle       && \
     echo oracle:oracle | chpasswd                                               && \
+    yum -y update                                                               && \
     yum -y install oracle-rdbms-server-12cR1-preinstall unzip wget tar openssl  && \
     yum -y remove java-openjdk java-openjdk-headless                            && \
     yum -y install $INSTALL_DIR/$INSTALL_FILE_JDK                               && \
