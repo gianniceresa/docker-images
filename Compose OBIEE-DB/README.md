@@ -1,3 +1,9 @@
+# Not updated anymore
+- OBIEE has newer images in https://github.com/gianniceresa/docker-images/tree/master/OracleBIEE
+- Oracle Database has newer images in https://github.com/oracle/docker-images/tree/master/OracleDatabase
+- running containers separately it's as easy as docker-compose (just need to check the DB is running before to start OBIEE)
+---
+
 Oracle Business Intelligence & Oracle Database
 ===============
 Sample Docker Compose files to automate installation, configuration, and environment setup. Docker Compose is a tool for defining and running multi-container Docker applications. 
