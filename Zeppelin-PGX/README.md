@@ -18,14 +18,14 @@ You can replace "apache/zeppelin:0.7.2-pgx" by any other tag you want to associa
 The container will automatically start PGX server and Apache Zeppelin. The Zeppelin PGX interpreter is already configured to connect to the PGX server.
 
 ```
-  docker run -d
+  docker run -d \
              --name zeppelin \
              -p 8080:8080 -p 7007:7007 \
              apache/zeppelin:0.7.2-pgx
   
   Parameters:
-     --name :         The name of the container itself
-     -p :             The port mapping of the host port to the container port. -P can be used for automatic mapping to random ports     
+     --name : The name of the container itself
+     -p :     The port mapping of the host port to the container port. -P can be used for automatic mapping to random ports     
 ``` 
 Once the container has been started you can connect to Zeppelin by using the URL http://localhost:8080 (replace *localhost* with the IP/address of the Docker host).
 
@@ -36,7 +36,7 @@ Once the **docker run** has been used to create a container it's possible to eas
 ```
 To start the container again simply use:
 ```
-  dockr start <container-id>
+  docker start <container-id>
 ```
 Data inside the container will be preserver between stop/start (notebooks will not be lost).
 
