@@ -60,7 +60,7 @@ Currently Oracle PGX on Docker is **NOT** supported by Oracle (maybe coming in t
 ## License
 To download and use PGX, regardless whether inside or outside a Docker container, you must download the binaries from the Oracle website and accept the license indicated at that page.
 
-All scripts and files hosted in this project and GitHub [docker-images/OracleBIEE](./) repository required to build the Docker images are, unless otherwise noted, released under the Common Development and Distribution License (CDDL) 1.0 and GNU Public License 2.0 licenses.
+All scripts and files hosted in this project required to build the Docker images are, unless otherwise noted, released under the Common Development and Distribution License (CDDL) 1.0 and GNU Public License 2.0 licenses.
 
 ## Copyright
 Copyright (c) 2017 [DATAlysis GmbH](https://datalysis.ch). All rights reserved.
