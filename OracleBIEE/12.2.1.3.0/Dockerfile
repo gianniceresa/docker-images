@@ -33,7 +33,7 @@ MAINTAINER Gianni Ceresa <gianni.ceresa@datalysis.ch>
 
 # Environment variables required for this build (do NOT change)
 # --------------------------------------------------------------
-ENV INSTALL_FILE_JDK="jdk-8u101-linux-x64.rpm"                       \
+ENV INSTALL_FILE_JDK="jdk-8u144-linux-x64.rpm"                       \
     INSTALL_FILE_WLS="fmw_12.2.1.3.0_infrastructure_Disk1_1of1.zip"  \
     INSTALL_FILE_BI_1="fmw_12.2.1.3.0_bi_linux64_Disk1_1of2.zip"     \
     INSTALL_FILE_BI_2="fmw_12.2.1.3.0_bi_linux64_Disk1_2of2.zip"     \
