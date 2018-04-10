@@ -76,7 +76,7 @@ RUN chmod ug+x $INSTALL_DIR/$INSTALL_FILE_JDK                                   
     mkdir -p $ORACLE_HOME                                                       && \
     mkdir -p $DOMAIN_HOME                                                       && \
     chown -R oracle:dba $ORACLE_BASE                                            && \
-    chmod ug+x $ORACLE_BASE/$RUN_FILE
+    chmod ug+x $ORACLE_BASE/*.sh
 
 
 # Replace place holders (and force /dev/urandom for java)
