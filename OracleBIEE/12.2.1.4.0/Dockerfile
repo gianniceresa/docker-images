@@ -4,7 +4,7 @@
 #
 # OBIEE DOCKERFILES PROJECT
 # --------------------------
-# This is the Dockerfile for Oracle Business Intelligence 12.2.1.3.0 SampleAppLite
+# This is the Dockerfile for Oracle Business Intelligence 12.2.1.4.0 SampleAppLite
 # 
 # REQUIRED FILES TO BUILD THIS IMAGE
 # ----------------------------------
