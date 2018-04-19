@@ -3,7 +3,7 @@ Oracle Business Intelligence
 Sample Docker build files to facilitate installation, configuration, and environment setup for DevOps users. For more information about Oracle Business Intelligence please see the [Oracle Business Intelligence Documentation](http://docs.oracle.com/middleware/12213/index.html).
 
 ## How to build and run
-This project offers sample Dockerfiles for OBIEE 12c (12.2.1.0.0, 12.2.1.1.0, 12.2.1.2.0 and 12.2.1.3.0). To assist in building the images, you can use the [buildDockerImage.sh](buildDockerImage.sh) script. See below for instructions and usage.
+This project offers sample Dockerfiles for OBIEE 12c (12.2.1.0.0, 12.2.1.1.0, 12.2.1.2.0, 12.2.1.3.0 and 12.2.1.4.0). To assist in building the images, you can use the [buildDockerImage.sh](buildDockerImage.sh) script. See below for instructions and usage.
 
 The `buildDockerImage.sh` script is just a utility shell script that performs MD5 checks and is an easy way for beginners to get started. Expert users are welcome to directly call `docker build` with their prefered set of parameters.
 
@@ -19,7 +19,7 @@ Before you build the image make sure that you have provided the installation bin
   
   Parameters:
      -v: version to build
-         Choose one of: 12.2.1.0.0  12.2.1.1.0  12.2.1.2.0 12.2.1.3.0
+         Choose one of: 12.2.1.0.0  12.2.1.1.0  12.2.1.2.0  12.2.1.3.0  12.2.1.4.0
      -i: ignores the MD5 checksums
   
   LICENSE CDDL 1.0 + GPL 2.0
@@ -39,7 +39,7 @@ To run your OBIEE Docker image use the **docker run** command as follows:
              --stop-timeout 600 \
              -e "BI_CONFIG_RCU_DBSTRING=192.168.120.80:1521:orclpdb1" \
              -e "BI_CONFIG_RCU_PWD=Admin123" \
-             oracle/obiee:12.2.1.3.0
+             oracle/obiee:12.2.1.4.0
   
   Parameters:
      --name :         The name of the container itself
@@ -95,7 +95,7 @@ Run an ephemeral OBIEE container which will drop RCU and will be destroyed when 
              -e "BI_CONFIG_RCU_DBSTRING=192.168.120.80:1521:orclpdb1" \
              -e "BI_CONFIG_RCU_PWD=Admin123" \
              -e "DROP_RCU_ON_EXIT=true" \
-             oracle/obiee:12.2.1.3.0
+             oracle/obiee:12.2.1.4.0
 ```
 
 #### Available variables
