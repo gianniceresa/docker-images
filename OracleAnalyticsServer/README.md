@@ -3,7 +3,7 @@ Oracle Analytics Server
 Sample Docker build files to facilitate installation, configuration, and environment setup for DevOps users. For more information about Oracle Analytic Server please see the [Oracle Analytics Server](https://docs.oracle.com/en/middleware/bi/analytics-server/books.html).
 
 ## How to build and run
-This project offers sample Dockerfiles for OAS (v5.5.0). To assist in building the images, you can use the [buildDockerImage.sh](buildDockerImage.sh) script. See below for instructions and usage.
+This project offers sample Dockerfiles for OAS (v5.5.0 and v5.9.0). To assist in building the images, you can use the [buildDockerImage.sh](buildDockerImage.sh) script. See below for instructions and usage.
 
 The `buildDockerImage.sh` script is just a utility shell script that performs MD5 checks and is an easy way for beginners to get started. Expert users are welcome to directly call `docker build` with their prefered set of parameters.
 
@@ -19,7 +19,7 @@ Before you build the image make sure that you have provided the installation bin
   
   Parameters:
      -v: version to build
-         Choose one of: 5.5.0
+         Choose one of: 5.5.0  5.9.0
      -i: ignores the MD5 checksums
   
   LICENSE CDDL 1.0 + GPL 2.0
@@ -39,7 +39,7 @@ To run your OAS Docker image use the **docker run** command as follows:
              --stop-timeout 600 \
              -e "BI_CONFIG_RCU_DBSTRING=192.168.120.80:1521:orclpdb1" \
              -e "BI_CONFIG_RCU_PWD=Admin123" \
-             oracle/oas:5.5.0
+             oracle/oas:5.9.0
   
   Parameters:
      --name :         The name of the container itself
@@ -95,7 +95,7 @@ Run an ephemeral OAS container which will drop RCU and will be destroyed when st
              -e "BI_CONFIG_RCU_DBSTRING=192.168.120.80:1521:orclpdb1" \
              -e "BI_CONFIG_RCU_PWD=Admin123" \
              -e "DROP_RCU_ON_EXIT=true" \
-             oracle/oas:5.5.0
+             oracle/oas:5.9.0
 ```
 
 #### Available variables
