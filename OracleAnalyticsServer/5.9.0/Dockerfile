@@ -67,7 +67,7 @@ COPY ${INSTALL_RSP_WLS} ${INSTALL_RSP_OAS} ${CONFIG_RSP_OAS} ${RUN_FILE} _config
 RUN useradd -d /home/oracle -m -s /bin/bash oracle                               && \
     echo oracle:oracle | chpasswd                                                && \
     yum -y update                                                                && \
-    yum -y install oracle-database-preinstall-19c unzip wget tar openssl   && \
+    yum -y install oracle-database-preinstall-19c unzip wget tar openssl libgfortran  && \
     yum -y localinstall ${INSTALL_DIR}/${INSTALL_FILE_JDK}                       && \
     yum clean all                                                                && \
     rm ${INSTALL_DIR}/${INSTALL_FILE_JDK}                                        && \
