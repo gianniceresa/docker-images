@@ -27,7 +27,7 @@ Before you build the image make sure that you have provided the installation bin
   Copyright (c) 2020 DATAlysis LLC (https://datalysis.ch). All rights reserved.
 ```
 
-The OAS [6.4 image](./6.4.0/) by default also expects various patches. On top of the [Dockerfile](./6.4.0/Dockerfile) they are listed with direct links for download. If you don't have a MOS subscription, you could edit the image to remove them (also from the checksum file). The product should still work (but I didn't try it).
+The [OAS 6.4](./6.4.0/) image by default also expects various patches. On top of the [Dockerfile](./6.4.0/Dockerfile) they are listed with direct links for download. If you don't have a MOS subscription, you could edit the image to remove them (also from the checksum file). The product should still work (but I didn't try it).
 
 **IMPORTANT:** The resulting images will be an image with Weblogic and OAS installed. On first startup of the container the OAS configuration (domain, RCU, etc.) will be executed.
 
