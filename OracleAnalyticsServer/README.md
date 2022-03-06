@@ -3,12 +3,12 @@ Oracle Analytics Server
 Sample Docker build files to facilitate installation, configuration, and environment setup for DevOps users. For more information about Oracle Analytic Server please see the [Oracle Analytics Server](https://docs.oracle.com/en/middleware/bi/analytics-server/books.html).
 
 ## How to build and run
-This project offers sample Dockerfiles for OAS (v5.5.0 and v5.9.0). To assist in building the images, you can use the [buildDockerImage.sh](buildDockerImage.sh) script. See below for instructions and usage.
+This project offers sample Dockerfiles for OAS (v5.5.0, v5.9.0 and v.6.4.0). To assist in building the images, you can use the [buildDockerImage.sh](buildDockerImage.sh) script. See below for instructions and usage.
 
 The `buildDockerImage.sh` script is just a utility shell script that performs MD5 checks and is an easy way for beginners to get started. Expert users are welcome to directly call `docker build` with their prefered set of parameters.
 
 ### Building Oracle Analytics Server Docker Install Images
-**IMPORTANT:** You will have to provide the installation binaries of Oracle Analytics Server and put them into the `<version>` folder. You only need to provide the binaries for the version you are going to install. You also have to make sure to have internet connectivity for yum. You also need to provide the RPM of the Oracle JDK version you want to use.
+**IMPORTANT:** You will have to provide the installation binaries of Oracle Analytics Server and put them into the `<version>` folder. You only need to provide the binaries for the version you are going to install. You also have to make sure to have internet connectivity for yum/dnf. You also need to provide the RPM of the Oracle JDK version you want to use and the needed patches.
 
 Before you build the image make sure that you have provided the installation binaries and put them into the right folder. Once you have chosen which version you want to build an image of, run the **buildDockerImage.sh** script as root or with `sudo` privileges (if your user isn't allowed to execute docker directly):
 ```
@@ -19,13 +19,16 @@ Before you build the image make sure that you have provided the installation bin
   
   Parameters:
      -v: version to build
-         Choose one of: 5.5.0  5.9.0
+         Choose one of: 5.5.0  5.9.0  6.4.0
      -i: ignores the MD5 checksums
   
   LICENSE CDDL 1.0 + GPL 2.0
   
   Copyright (c) 2020 DATAlysis LLC (https://datalysis.ch). All rights reserved.
 ```
+
+The 6.4.0 version by default also expectes various patches. If you don't have a MOS subscription to download them, you could edit the image to remove them (also from the checksum file). The product should still work (but I didn't try it).
+
 **IMPORTANT:** The resulting images will be an image with Weblogic and OAS installed. On first startup of the container the OAS configuration (domain, RCU, etc.) will be executed.
 
 ### Running Oracle Analytics Server in a Docker container
@@ -39,7 +42,7 @@ To run your OAS Docker image use the **docker run** command as follows:
              --stop-timeout 600 \
              -e "BI_CONFIG_RCU_DBSTRING=192.168.120.80:1521:orclpdb1" \
              -e "BI_CONFIG_RCU_PWD=Admin123" \
-             oracle/oas:5.9.0
+             oracle/oas:6.4.0
   
   Parameters:
      --name :         The name of the container itself
@@ -95,7 +98,7 @@ Run an ephemeral OAS container which will drop RCU and will be destroyed when st
              -e "BI_CONFIG_RCU_DBSTRING=192.168.120.80:1521:orclpdb1" \
              -e "BI_CONFIG_RCU_PWD=Admin123" \
              -e "DROP_RCU_ON_EXIT=true" \
-             oracle/oas:5.9.0
+             oracle/oas:6.4.0
 ```
 
 #### Available variables
@@ -119,4 +122,4 @@ To download and run Oracle Analytics Server, regardless whether inside or outsid
 All scripts and files hosted in this project and GitHub [docker-images/OracleAnalyticsServer](./) repository required to build the Docker images are, unless otherwise noted, released under the Common Development and Distribution License (CDDL) 1.0 and GNU Public License 2.0 licenses.
 
 ## Copyright
-Copyright (c) 2020 [DATAlysis LLC](https://datalysis.ch). All rights reserved.
+Copyright (c) 2022 [DATAlysis LLC](https://datalysis.ch). All rights reserved.
