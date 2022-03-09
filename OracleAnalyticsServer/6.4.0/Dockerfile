@@ -112,11 +112,11 @@ USER oracle
 # Start installation
 # ------------------
 RUN cd ${INSTALL_DIR}  && \
-    unzip ${INSTALL_DIR}/${INSTALL_FILE_WLS} -d ${INSTALL_DIR}/tmp_wls                                                                                 && \
+    unzip ${INSTALL_DIR}/${INSTALL_FILE_WLS} -d ${INSTALL_DIR}/tmp_wls                                                                                  && \
     rm ${INSTALL_DIR}/${INSTALL_FILE_WLS}                                                                                                               && \
     java -jar $(find ${INSTALL_DIR}/tmp_wls -name *.jar) -silent -responseFile ${ORACLE_BASE}/${INSTALL_RSP_WLS} -invPtrLoc ${ORACLE_BASE}/oraInst.loc  && \
     rm -rf ${INSTALL_DIR}/tmp_wls                                                                                                                       && \
-    unzip ${INSTALL_DIR}/${INSTALL_FILE_OAS} -d ${INSTALL_DIR}/tmp_oas                                                                                 && \
+    unzip ${INSTALL_DIR}/${INSTALL_FILE_OAS} -d ${INSTALL_DIR}/tmp_oas                                                                                  && \
     rm ${INSTALL_DIR}/${INSTALL_FILE_OAS}                                                                                                               && \
     java -jar $(find ${INSTALL_DIR}/tmp_oas -name *.jar) -silent -responseFile ${ORACLE_BASE}/${INSTALL_RSP_OAS} -invPtrLoc ${ORACLE_BASE}/oraInst.loc  && \
     rm -rf ${INSTALL_DIR}/tmp_oas                                                                                                                       && \
@@ -148,7 +148,6 @@ RUN cd ${INSTALL_DIR}  && \
     ${ORACLE_HOME}/OPatch/opatch apply -silent -invPtrLoc ${ORACLE_BASE}/oraInst.loc          && \
     cd ${INSTALL_DIR}                                                                         && \
     rm -rf ${INSTALL_DIR}/wsl_patch_log4j1                                                    && \
-    
     rm -rf ${INSTALL_DIR}
 
 # Set work directory
