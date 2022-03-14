@@ -8,9 +8,9 @@
 # 
 # REQUIRED FILES TO BUILD THIS IMAGE
 # ----------------------------------
-# (1) jdk-8u311-linux-x64.rpm
-#     Download Oracle JSK 1.8.211+ (1.8.311 is used in this image)
-#     from https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html
+# (1) jdk-8u321-linux-x64.rpm
+#     Download Oracle JSK 1.8.211+ (1.8.321 is used in this image)
+#     from https://www.oracle.com/java/technologies/downloads/#java8
 # (2) fmw_12.2.1.4.0_infrastructure_Disk1_1of1.zip
 #     Download Oracle WebLogic Server 12.2.1.4 - Fusion Middleware Infrastructure Installer
 #     from https://www.oracle.com/middleware/technologies/weblogic-server-installers-downloads.html
@@ -51,7 +51,7 @@ LABEL maintainer="Gianni Ceresa <gianni.ceresa@datalysis.ch>"
 # -------------------------------------------------------------
 ENV OAS_VERSION="6.4.0"                         \
     ORACLE_BASE=/opt/oracle                     \
-    INSTALL_FILE_JDK="jdk-8u311-linux-x64.rpm"  \
+    INSTALL_FILE_JDK="jdk-8u321-linux-x64.rpm"  \
     INSTALL_FILE_WLS="fmw_12.2.1.4.0_infrastructure_Disk1_1of1.zip" \
     INSTALL_FILE_OAS="Oracle_Analytics_Server_Linux_6.4.0.zip"      \
     INSTALL_FILE_OPATCH="p28186730_139428_Generic.zip"              \
