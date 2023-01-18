@@ -102,7 +102,7 @@ RCU_SETTINGS="$RCU_SETTINGS $DBCONN_PARAM"
 RCU_SETTINGS="$RCU_SETTINGS $COMPONENTS"
 
 # write password in file
-(echo $BI_CONFIG_RCU_PWD; echo $BI_CONFIG_RCU_PWD) > $ORACLE_HOME/_tmp_rcu.dat
+(echo $BI_CONFIG_RCU_PWD; echo $BI_CONFIG_RCU_NEW_DB_PWD; echo $BI_CONFIG_RCU_NEW_DB_PWD;) > $ORACLE_HOME/_tmp_rcu.dat
 
 #
 # validate RCU create command and settings 
