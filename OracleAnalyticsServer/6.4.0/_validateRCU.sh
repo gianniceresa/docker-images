@@ -35,6 +35,12 @@ if [ "$BI_CONFIG_RCU_PWD" == "" ]; then
   exit 1
 fi;
 
+# - BI_CONFIG_RCU_NEW_DB_PWD
+if [ "$BI_CONFIG_RCU_NEW_DB_PWD" == "" ]; then
+  BI_CONFIG_RCU_NEW_DB_PWD=Admin123
+  echo "BI_CONFIG_RCU_NEW_DB_PWD not defined, default: $BI_CONFIG_RCU_NEW_DB_PWD"
+fi;
+
 # - BI_CONFIG_RCU_DB_PREFIX
 if [ "$BI_CONFIG_RCU_DB_PREFIX" == "" ]; then
   BI_CONFIG_RCU_DB_PREFIX=$(hostname -f)
@@ -102,7 +108,7 @@ RCU_SETTINGS="$RCU_SETTINGS $DBCONN_PARAM"
 RCU_SETTINGS="$RCU_SETTINGS $COMPONENTS"
 
 # write password in file
-(echo $BI_CONFIG_RCU_PWD; echo $BI_CONFIG_RCU_PWD) > $ORACLE_HOME/_tmp_rcu.dat
+(echo $BI_CONFIG_RCU_PWD; echo $BI_CONFIG_RCU_NEW_DB_PWD) > $ORACLE_HOME/_tmp_rcu.dat
 
 #
 # validate RCU create command and settings 

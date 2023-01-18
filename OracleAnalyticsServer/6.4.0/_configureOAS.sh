@@ -120,7 +120,7 @@ if [ "$BI_CONFIG_RCU_DB_PREFIX" == "" ]; then
 fi;
 sed -i -e "s|###BI_CONFIG_RCU_DB_PREFIX###|$BI_CONFIG_RCU_DB_PREFIX|g" $RSP_FILE
 
-# - BI_CONFIG_RCU_DB_PREFIX
+# - BI_CONFIG_RCU_NEW_DB_PWD
 if [ "$BI_CONFIG_RCU_NEW_DB_PWD" == "" ]; then
   BI_CONFIG_RCU_NEW_DB_PWD=Admin123
   echo "BI_CONFIG_RCU_NEW_DB_PWD not defined, default: $BI_CONFIG_RCU_NEW_DB_PWD"

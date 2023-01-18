@@ -13,7 +13,7 @@
 #     fmw_12.2.1.4.0_bi_linux64_Disk1_2of2.zip
 #     Download Oracle Business Intelligence 12.2.1.4.0 for Linux x64
 #     from http://www.oracle.com/technetwork/middleware/bi-enterprise-edition/downloads/default-4441820.html
-# (2) jdk-8u144-linux-x64.rpm
+# (2) jdk-8u172-linux-x64.rpm
 #     Download Oracle JDK 1.8.131+
 #     from http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 #
