@@ -9,7 +9,7 @@
 # REQUIRED FILES TO BUILD THIS IMAGE
 # ----------------------------------
 # (1) jdk-8u321-linux-x64.rpm
-#     Download Oracle JSK 1.8.211+ (1.8.321 is used in this image)
+#     Download Oracle JDK 1.8.211+ (1.8.321 is used in this image)
 #     from https://www.oracle.com/java/technologies/downloads/#java8
 # (2) fmw_12.2.1.4.0_infrastructure_Disk1_1of1.zip
 #     Download Oracle WebLogic Server 12.2.1.4 - Fusion Middleware Infrastructure Installer
