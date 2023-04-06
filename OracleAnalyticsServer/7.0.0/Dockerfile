@@ -41,6 +41,9 @@
 # (11) p34549208_122140_Generic.zip
 #      Download WebCenter Core Bundle 12.2.1.4.220825
 #      from https://support.oracle.com/epmos/faces/PatchDetail?patchId=34549208
+# (12) p35024228_122140_Linux-x86-64.zip
+#      Download OSS BUNDLE PATCH 12.2.1.4.230128
+#      from https://support.oracle.com/epmos/faces/PatchDetail?patchId=35024228
 #
 # HOW TO BUILD THIS IMAGE
 # -----------------------
@@ -71,6 +74,7 @@ ENV OAS_VERSION="7.0.0"                         \
     PATCH_FILE_FMW03="p34944256_122140_Generic.zip"  \
     PATCH_FILE_FMW04="p33950717_122140_Generic.zip"  \
     PATCH_FILE_FMW05="p34549208_122140_Generic.zip"  \
+    PATCH_FILE_OAS01="p35024228_122140_Linux-x86-64.zip"  \
     INSTALL_RSP_WLS="weblogic.rsp"     \
     INSTALL_RSP_OAS="oas_install.rsp"  \
     CONFIG_RSP_OAS="oas_config.rsp"    \
@@ -83,7 +87,7 @@ ENV INSTALL_DIR=${ORACLE_BASE}/install                 \
 
 # Copy binaries
 # -------------
-COPY ${INSTALL_FILE_JDK} ${INSTALL_FILE_WLS} ${INSTALL_FILE_OAS} ${INSTALL_FILE_OPATCH} ${PATCH_FILE_WLS01} ${PATCH_FILE_WLS02} ${PATCH_FILE_FMW01} ${PATCH_FILE_FMW02} ${PATCH_FILE_FMW03} ${PATCH_FILE_FMW04} ${PATCH_FILE_FMW05} ${INSTALL_DIR}/
+COPY ${INSTALL_FILE_JDK} ${INSTALL_FILE_WLS} ${INSTALL_FILE_OAS} ${INSTALL_FILE_OPATCH} ${PATCH_FILE_WLS01} ${PATCH_FILE_WLS02} ${PATCH_FILE_FMW01} ${PATCH_FILE_FMW02} ${PATCH_FILE_FMW03} ${PATCH_FILE_FMW04} ${PATCH_FILE_FMW05} ${PATCH_FILE_OAS01} ${INSTALL_DIR}/
 COPY ${INSTALL_RSP_WLS} ${INSTALL_RSP_OAS} ${CONFIG_RSP_OAS} ${RUN_FILE} _configureOAS.sh _validateRCU.sh _dropRCU.sh ${ORACLE_BASE}/
 
 # Setup filesystem and 'oracle' user
@@ -195,8 +199,16 @@ RUN cd ${INSTALL_DIR}  \
     && ${ORACLE_HOME}/OPatch/opatch apply -silent -invPtrLoc ${ORACLE_BASE}/oraInst.loc  \
     && cd ${INSTALL_DIR}                                                                 \
     && rm -rf ${INSTALL_DIR}/patch                                                       \
+    ### Patch OAS
+    # - patch 1
+    && unzip ${INSTALL_DIR}/${PATCH_FILE_OAS01} -d ${INSTALL_DIR}/patch                  \
+    && rm ${INSTALL_DIR}/${PATCH_FILE_OAS01}                                             \
+    && cd $(find ${INSTALL_DIR}/patch -maxdepth 1 -type d -name '*[0-9]*')               \
+    && ${ORACLE_HOME}/OPatch/opatch apply -silent -invPtrLoc ${ORACLE_BASE}/oraInst.loc  \
+    && cd ${INSTALL_DIR}                                                                 \
+    && rm -rf ${INSTALL_DIR}/patch                                                       \
     # clean up
-    && cd ${ORACLE_BASE}  \
+    && cd ${ORACLE_BASE}      \
     && rm -rf ${INSTALL_DIR}
 
 # Set work directory
