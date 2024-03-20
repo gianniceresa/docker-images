@@ -87,7 +87,7 @@ ENV INSTALL_DIR=${ORACLE_BASE}/install                       \
 # Copy binaries
 # -------------
 COPY ${INSTALL_FILE_JDK} ${INSTALL_FILE_WLS} ${INSTALL_FILE_OAS} ${INSTALL_FILE_OPATCH} ${PATCH_FILE_WLS01} ${PATCH_FILE_FMW01} ${PATCH_FILE_FMW02} ${PATCH_FILE_FMW03} ${PATCH_FILE_FMW04} ${PATCH_FILE_FMW05} ${PATCH_FILE_FMW06} ${INSTALL_DIR}/
-COPY ${INSTALL_RSP_WLS} ${INSTALL_RSP_OAS} ${CONFIG_RSP_OAS} ${RUN_FILE} _configureOAS.sh _validateRCU.sh _dropRCU.sh bi_excel_export_start.sh bi_excel_export_stop.sh package.json ${ORACLE_BASE}/
+COPY ${INSTALL_RSP_WLS} ${INSTALL_RSP_OAS} ${CONFIG_RSP_OAS} ${RUN_FILE} _configureOAS.sh _validateRCU.sh _dropRCU.sh package.json ${ORACLE_BASE}/
 
 # Setup filesystem and 'oracle' user
 # Adjust file permissions, go to 'ORACLE_HOME' as 'oracle' to proceed with OAS installation
@@ -104,9 +104,10 @@ RUN useradd -d /home/oracle -m -s /bin/bash oracle  \
     && dnf -y install ${INSTALL_DIR}/${INSTALL_FILE_JDK}  \
     && dnf clean all                                      \
     && rm ${INSTALL_DIR}/${INSTALL_FILE_JDK}              \
-    ### Install NodeJs
+    ### Install NodeJs (and PM2)
     && dnf module enable -y nodejs:20  \
     && dnf install -y nodejs           \
+    && npm install pm2@latest -g       \
     ### Prepare directories
     && mkdir -p ${ORACLE_BASE}  \
     && mkdir -p ${ORACLE_HOME}  \
@@ -205,12 +206,11 @@ RUN cd ${INSTALL_DIR}  \
     # clean up
     && cd ${ORACLE_BASE}                                                                 \
     && rm -rf ${INSTALL_DIR}                                                             \
-    ### Install NodeJs modules for DV Excel export
+    ### Install NodeJs modules for BI Excel export
     && mkdir -p ${BI_EXCEL_EXPORT}                                                       \
     && cd ${BI_EXCEL_EXPORT}                                                             \
     && mv ${ORACLE_BASE}/package.json ${BI_EXCEL_EXPORT}/                                \
-    && npm install                                                                       \
-    && mv ${ORACLE_BASE}/bi_excel_export_st*.sh ${BI_EXCEL_EXPORT}/
+    && npm install
 
 # Set work directory
 # ------------------

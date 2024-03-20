@@ -83,13 +83,13 @@ function stopOAS {
 ############# Start BI Excel Export ################
 function startBIExcelExport {
   echo "Starting BI Excel Export"
-  ${BI_EXCEL_EXPORT}/bi_excel_export_start.sh
+  pm2 start ${ORACLE_HOME}/bi/modules/oracle.bi.tech/obitech-serverside-exportexcel-bundle.js
 }
 
 ############# Stop BI Excel Export ################
 function stopBIExcelExport {
   echo "Stopping BI Excel Export"
-  ${BI_EXCEL_EXPORT}/bi_excel_export_stop.sh
+  pm2 stop obitech-serverside-exportexcel-bundle
 }
 
 ############# MAIN ################
