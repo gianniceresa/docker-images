@@ -1,0 +1,107 @@
+[ENGINE]
+
+#DO NOT CHANGE THIS.
+Response File Version=1.0.0.0.0
+
+[GENERIC]
+
+#If false, omit the startup action at the end of the config assistant.
+PERFORM_BI_STARTUP=true
+
+#Set limit on number of Oracle Analytic Service Instances. Only used if SERVICE_INSTANCE_MODE = MULTI
+SERVICE_INSTANCE_LIMIT=2
+
+#If empty string will default to BI logout page
+LOGOUT_URL=
+
+#Select to include BIEE.   Values are true or false.
+CONFIGURE_BIEE=true
+
+#Select to include BIP (BI Publisher).   Values are true or false.
+CONFIGURE_BIP=true
+
+#Install Exalytics In-Memory Software. If this is set to true and Exalytics hardware is NOT present an error will occur.
+INSTALL_EXALYTICS_IN_MEMORY_SOFTWARE=false
+
+#Set Single Service Instance vs Multi Service Instance Mode.
+SERVICE_INSTANCE_MODE=SINGLE
+
+#The domain to be created
+DOMAIN_NAME=###BI_CONFIG_DOMAINE_NAME###
+
+#The directory in which the domain home directory will be created
+DOMAINS_DIR=###DOMAIN_HOME###
+
+#Specify the administrator username.
+ADMIN_USER_NAME=###BI_CONFIG_ADMIN_USER###
+
+#Specify the administrator password.
+ADMIN_PASSWORD=###BI_CONFIG_ADMIN_PWD###
+
+#Specify the administrator confirmation password
+ADMIN_CONFIRM_PASSWORD=###BI_CONFIG_ADMIN_PWD###
+
+#LOCAL, CREATE_ONLY, USE_EXISTING
+DOMAIN_WORK=LOCAL
+
+#Select the schema type. Supported types are SCHEMA_TYPE_NEW, SCHEMA_TYPE_EXISTING.  
+SCHEMA_TYPE=SCHEMA_TYPE_NEW
+
+#Select the existing database type to connect to. Supported database types are ORACLE, ORACLE_RAC, ORACLE_TNS_ALIAS, IBMDB2 and SQLSERVER.
+EXISTING_DATABASE_TYPE=ORACLE
+
+#Format: hostname:port:servicename. For Application Cluster Database: host1:port1^host2:port2@servicename
+CONNECT_STRING=###BI_CONFIG_RCU_DBSTRING###
+
+#Format: host1:port1^host2:port2
+FAN_CONNECT_STRING=
+
+#Select the new database type to connect to. Supported database types are ORACLE, ORACLE_RAC, and SQLSERVER.  For database types not supported with new schema create the schema in RCU and then use SCHEMA_TYPE_EXISTING
+DATABASE_TYPE=ORACLE
+
+#Username for account with privileges to create new schemas
+NEW_DB_ADMIN_USERNAME=###BI_CONFIG_RCU_USER###
+
+#Password for account with privileges to create new schemas.
+NEW_DB_PASSWORD=###BI_CONFIG_RCU_PWD###
+
+#Prefix for newly created schemas
+NEW_DB_SCHEMA_PREFIX=###BI_CONFIG_RCU_DB_PREFIX###
+
+#Password to be used for all new schemas.
+NEW_DB_SCHEMA_PASSWORD=###BI_CONFIG_RCU_NEW_DB_PWD###
+
+#Password to be used for all new schemas.
+NEW_DB_CONFIRM_SCHEMA_PASSWORD=###BI_CONFIG_RCU_NEW_DB_PWD###
+
+#Enter the prefix used in RCU when the schemas were created.
+EXISTING_DB_PREFIX=
+
+#Enter the password for the STB schema.
+EXISTING_DB_PASSWORD=
+
+#The start port for the port range.  If 'STATIC' static ports file will be used instead.
+PORT_RANGE_START=9500
+
+#The end port for the port range. Ignored if PORT_RANGE_START is 'STATIC', in which case static ports are used.
+PORT_RANGE_END=9999
+
+#Location of static ports file.  Only set if PORT_RANGE_START is 'STATIC'
+STATIC_PORTS_FILE=
+
+#Select type of initial application.  Supported types are APPLICATION_TYPE_BI_BUNDLE, APPLICATION_TYPE_EMPTY.
+APPLICATION_TYPE=APPLICATION_TYPE_EMPTY
+
+#Location of BI Bundle file to use as the initial application.  Only used if APPLICATION_TYPE is APPLICATION_TYPE_BI_BUNDLE. 
+BI_BUNDLE_FILE=
+
+#Password which secures existing BI archive file
+BI_BUNDLE_PASSWORD=
+
+#New password which will secure AppLite as it is modified with customer data
+BI_APP_LITE_PASSWORD=
+
+#Identifier of initial default service instance if pluggable modules is enabled
+BI_DEFAULT_SERVICE_INSTANCE_KEY=ssi
+
+

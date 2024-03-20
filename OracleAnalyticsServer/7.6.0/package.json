@@ -1,0 +1,12 @@
+{
+  "name": "bi-excel-export",
+  "version": "1.0.0",
+  "description": "OAS 2024 - BI Excel export",
+  "dependencies": {
+    "express": "^4.17",
+    "jquery-deferred": "^0.3.1",
+    "log4js": "6.4.1",
+    "html-to-xlsx": "^2.2.0",
+    "puppeteer": "20.7.4"
+  }
+}
