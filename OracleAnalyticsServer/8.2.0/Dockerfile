@@ -100,7 +100,7 @@ RUN useradd -d /home/oracle -m -s /bin/bash oracle  \
     && dnf -y update  \
     && dnf -y install binutils gcc gcc-c++ glibc glibc-devel ksh libaio libcap libgcc libstdc++ libstdc++-devel libnsl sysstat motif motif-devel openssl make xorg-x11-utils compat-libgfortran-48  \
     && dnf install -y https://yum.oracle.com/repo/OracleLinux/OL8/appstream/x86_64/getPackage/compat-libpthread-nonshared-2.28-251.0.2.el8_10.5.x86_64.rpm  \
-    && dnf -y install unzip mesa-libgbm at-spi2-atk       \
+    && dnf -y install hostname unzip mesa-libgbm at-spi2-atk  \
     ### Install JDK
     && dnf -y install ${INSTALL_DIR}/${INSTALL_FILE_JDK}  \
     && dnf clean all                                      \
