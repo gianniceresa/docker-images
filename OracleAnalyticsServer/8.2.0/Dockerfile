@@ -1,56 +1,56 @@
 # LICENSE CDDL 1.0 + GPL 2.0
 #
-# Copyright (c) 2024 DATAlysis LLC (https://datalysis.ch). All rights reserved.
+# Copyright (c) 2025 DATAlysis LLC (https://datalysis.ch). All rights reserved.
 #
 # OAS DOCKERFILES PROJECT
 # --------------------------
-# This is the Dockerfile for Oracle Analytics Server 7.6.0 (2024)
+# This is the Dockerfile for Oracle Analytics Server 8.2.0 (2025)
 #
 # REQUIRED FILES TO BUILD THIS IMAGE
 # ----------------------------------
-# (1)  jdk-8u401-linux-x64.rpm
-#      Download Oracle JDK 1.8.341+ (1.8.401 is used in this image)
+# (1)  jdk-8u441-linux-x64.rpm
+#      Download Oracle JDK 1.8.341+ (1.8.441 is used in this image)
 #      from https://www.oracle.com/java/technologies/downloads/#java8
 # (2)  fmw_12.2.1.4.0_infrastructure_Disk1_1of1.zip
 #      Download Oracle WebLogic Server 12.2.1.4 - Fusion Middleware Infrastructure Installer
 #      from https://www.oracle.com/middleware/technologies/weblogic-server-installers-downloads.html
-# (3)  Oracle_Analytics_Server_Linux_7.6.0.zip
-#      Download Oracle Analytics Server 2024 (7.6.0) Installer For Linux x86-64-bit
+# (3)  Oracle_Analytics_Server_Linux_8.2.0.zip
+#      Download Oracle Analytics Server 2025 (8.2.0) Installer For Linux x86-64-bit
 #      from https://www.oracle.com/solutions/business-analytics/analytics-server/analytics-server.html
-# (4)  p28186730_1394214_Generic.zip
-#      Download OPatch 13.9.4.2.11+ (13.9.4.2.14 is used in this image)
+# (4)  p28186730_1394218_Generic.zip
+#      Download OPatch 13.9.4.2.11+ (13.9.4.2.18 is used in this image)
 #      from https://support.oracle.com/epmos/faces/PatchDetail?patchId=28186730
-# (5)  p36178496_122140_Generic.zip
-#      Download WLS STACK PATCH BUNDLE 12.2.1.4.240111
-#      https://support.oracle.com/epmos/faces/PatchDetail?patchId=36178496
-# (6)  p36074941_122140_Generic.zip
-#      Download ADF BUNDLE PATCH 12.2.1.4.231205
-#      from https://support.oracle.com/epmos/faces/PatchDetail?patchId=36074941
+# (5)  p37476485_122140_Generic.zip
+#      Download WLS STACK PATCH BUNDLE 12.2.1.4.250114
+#      https://support.oracle.com/epmos/faces/PatchDetail?patchId=37476485
+# (6)  p37388935_122140_Generic.zip
+#      Download ADF BUNDLE PATCH 12.2.1.4.241212
+#      from https://support.oracle.com/epmos/faces/PatchDetail?patchId=37388935
 # (7)  p34809489_122140_Generic.zip
 #      Download Fix for CVE-2021-42575 (July 2023)
 #      from https://support.oracle.com/epmos/faces/PatchDetail?patchId=34809489
-# (8)  p36034300_122140_Generic.zip
-#      Download WebCenter Core Bundle Patch 12.2.1.4.231120
-#      from https://support.oracle.com/epmos/faces/PatchDetail?patchId=36034300
-# (9)  p35868571_122140_Generic.zip
-#      Download OWSM BUNDLE PATCH 12.2.1.4.231003
-#      from https://support.oracle.com/epmos/faces/PatchDetail?patchId=35868571
-# (10) p34542329_122140_Generic.zip
+# (8)  p37284722_122140_Generic.zip
+#      Download WebCenter Core Bundle Patch 12.2.1.4.241114
+#      from https://support.oracle.com/epmos/faces/PatchDetail?patchId=37284722
+# (9)  p37035947_122140_Generic.zip
+#      Download OWSM BUNDLE PATCH 12.2.1.4.240908
+#      from https://support.oracle.com/epmos/faces/PatchDetail?patchId=37035947
+# (10) p36946553_122140_Generic.zip
 #      Download FMW Control 12.2.1.4 SPU/Merge for Consolidated Updates
-#      from https://support.oracle.com/epmos/faces/PatchDetail?patchId=34542329
-# (11) p33950717_122140_Generic.zip
-#      Download OPSS BUNDLE PATCH 12.2.1.4.220311
-#      from https://support.oracle.com/epmos/faces/PatchDetail?patchId=33950717
+#      from https://support.oracle.com/epmos/faces/PatchDetail?patchId=36946553
+# (11) p36316422_122140_Generic.zip
+#      Download OPSS BUNDLE PATCH 12.2.1.4.240220
+#      from https://support.oracle.com/epmos/faces/PatchDetail?patchId=36316422
 #
 # HOW TO BUILD THIS IMAGE
 # -----------------------
 # Put all downloaded files in the same directory as this Dockerfile
 # Run:
-#      $ docker build -t oracle/oas:7.6.0 .
+#      $ docker build -t oracle/oas:8.2.0 .
 
 # Pull base image
 # ---------------
-FROM oraclelinux:8
+FROM oraclelinux:9
 
 # Maintainer
 # ----------
@@ -58,19 +58,19 @@ LABEL maintainer="Gianni Ceresa <gianni.ceresa@datalysis.ch>"
 
 # Environment variables required for this build (do NOT change)
 # -------------------------------------------------------------
-ENV OAS_VERSION="7.6.0"                         \
+ENV OAS_VERSION="8.2.0"                         \
     ORACLE_BASE=/opt/oracle                     \
-    INSTALL_FILE_JDK="jdk-8u401-linux-x64.rpm"  \
+    INSTALL_FILE_JDK="jdk-8u441-linux-x64.rpm"  \
     INSTALL_FILE_WLS="fmw_12.2.1.4.0_infrastructure_Disk1_1of1.zip"   \
-    INSTALL_FILE_OAS="Oracle_Analytics_Server_Linux_7.6.0.zip"        \
-    INSTALL_FILE_OPATCH="p28186730_1394214_Generic.zip"               \
-    PATCH_FILE_WLS01="p36178496_122140_Generic.zip"  \
-    PATCH_FILE_FMW01="p36074941_122140_Generic.zip"  \
+    INSTALL_FILE_OAS="Oracle_Analytics_Server_Linux_8.2.0.zip"        \
+    INSTALL_FILE_OPATCH="p28186730_1394218_Generic.zip"               \
+    PATCH_FILE_WLS01="p37476485_122140_Generic.zip"  \
+    PATCH_FILE_FMW01="p37388935_122140_Generic.zip"  \
     PATCH_FILE_FMW02="p34809489_122140_Generic.zip"  \
-    PATCH_FILE_FMW03="p36034300_122140_Generic.zip"  \
-    PATCH_FILE_FMW04="p35868571_122140_Generic.zip"  \
-    PATCH_FILE_FMW05="p34542329_122140_Generic.zip"  \
-    PATCH_FILE_FMW06="p33950717_122140_Generic.zip"  \
+    PATCH_FILE_FMW03="p37284722_122140_Generic.zip"  \
+    PATCH_FILE_FMW04="p37035947_122140_Generic.zip"  \
+    PATCH_FILE_FMW05="p36946553_122140_Generic.zip"  \
+    PATCH_FILE_FMW06="p36316422_122140_Generic.zip"  \
     INSTALL_RSP_WLS="weblogic.rsp"     \
     INSTALL_RSP_OAS="oas_install.rsp"  \
     CONFIG_RSP_OAS="oas_config.rsp"    \
@@ -98,8 +98,9 @@ RUN useradd -d /home/oracle -m -s /bin/bash oracle  \
     && echo oracle:oracle | chpasswd                \
     ### Update OS + install required packages
     && dnf -y update  \
-    && dnf -y install binutils gcc gcc-c++ glibc glibc-devel libaio libaio-devel libgcc libstdc++ libstdc++-devel libnsl sysstat motif motif-devel redhat-lsb redhat-lsb-core openssl make xorg-x11-utils compat-libgfortran-48  \
-    && dnf -y install mesa-libgbm at-spi2-atk       \
+    && dnf -y install binutils gcc gcc-c++ glibc glibc-devel ksh libaio libcap libgcc libstdc++ libstdc++-devel libnsl sysstat motif motif-devel openssl make xorg-x11-utils compat-libgfortran-48  \
+    && dnf install -y https://yum.oracle.com/repo/OracleLinux/OL8/appstream/x86_64/getPackage/compat-libpthread-nonshared-2.28-251.0.2.el8_10.5.x86_64.rpm  \
+    && dnf -y install unzip mesa-libgbm at-spi2-atk       \
     ### Install JDK
     && dnf -y install ${INSTALL_DIR}/${INSTALL_FILE_JDK}  \
     && dnf clean all                                      \
@@ -145,7 +146,7 @@ RUN cd ${INSTALL_DIR}  \
     ### Install OAS
     && unzip ${INSTALL_DIR}/${INSTALL_FILE_OAS} -d ${INSTALL_DIR}/tmp_oas                                                                                  \
     && rm ${INSTALL_DIR}/${INSTALL_FILE_OAS}                                                                                                               \
-    && java -jar $(find ${INSTALL_DIR}/tmp_oas -name Oracle_Analytics_Server_2024_Linux.jar) -silent -responseFile ${ORACLE_BASE}/${INSTALL_RSP_OAS} -invPtrLoc ${ORACLE_BASE}/oraInst.loc  \
+    && java -jar $(find ${INSTALL_DIR}/tmp_oas -name Oracle_Analytics_Server_2025_Linux.jar) -silent -responseFile ${ORACLE_BASE}/${INSTALL_RSP_OAS} -invPtrLoc ${ORACLE_BASE}/oraInst.loc  \
     && rm -rf ${INSTALL_DIR}/tmp_oas                                                                                                                       \
     ### Update OPatch
     && unzip ${INSTALL_DIR}/${INSTALL_FILE_OPATCH} -d ${INSTALL_DIR}/tmp_opatch                                                                       \

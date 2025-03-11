@@ -1,0 +1,19 @@
+# Oracle JDK 8u441
+165a5acb886ffe48ea2c2f13093244a9  jdk-8u441-linux-x64.rpm
+# Oracle WebLogic Server 12.2.1.4 - Fusion Middleware Infrastructure Installer
+48a6ac719d2c46469d554f652cb579e2  fmw_12.2.1.4.0_infrastructure_Disk1_1of1.zip
+# Oracle Analytics Server 8.2.0 (2025)
+f6f7558bdc8f430fdccca49e3cbcd105  Oracle_Analytics_Server_Linux_8.2.0.zip
+# Patches
+# - OPatch
+29907a0cbc64a3505886b8bcd8b980b5  p28186730_1394218_Generic.zip
+# - WebLogic Server
+34348c906b8bac96e91f2ba51a126f00  p37476485_122140_Generic.zip
+# - FMW Infrastructure
+4d8240f28b2d6c0a4ce994a198102dd5  p34809489_122140_Generic.zip
+5bca304cdaf0b467fbcb8ddf8cbedc79  p36316422_122140_Generic.zip
+fb2316cf02c0dc5b58c2bed7593033c4  p36946553_122140_Generic.zip
+ba5525486627d49f2de7cbe805edc4ab  p37035947_122140_Generic.zip
+5659af714293aba53b33482f9cef9374  p37284722_122140_Generic.zip
+99bbf0353150d0ed6ac8c3d3ea8f1b25  p37388935_122140_Generic.zip
+
