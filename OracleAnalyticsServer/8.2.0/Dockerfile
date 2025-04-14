@@ -220,7 +220,7 @@ WORKDIR ${ORACLE_BASE}
 
 # Expose ports
 # ------------
-EXPOSE 9500-9514
+EXPOSE 9500-9515
 
 # Define default command to start OAS
 # -----------------------------------
