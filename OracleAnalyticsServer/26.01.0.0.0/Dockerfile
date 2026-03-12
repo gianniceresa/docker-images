@@ -103,12 +103,16 @@ RUN useradd -d /home/oracle -m -s /bin/bash oracle  \
     && dnf -y install binutils gcc gcc-c++ glibc glibc-devel libaio libaio-devel libgcc libstdc++ libstdc++-devel libnsl sysstat motif motif-devel openssl make xorg-x11-utils ksh libcap libgfortran libxcrypt-compat  \
     ### Install JDK
     && dnf -y install ${INSTALL_DIR}/${INSTALL_FILE_JDK}  \
-    && dnf clean all                                      \
     && rm ${INSTALL_DIR}/${INSTALL_FILE_JDK}              \
     ### Install NodeJs (and PM2)
     && dnf module enable -y nodejs:24  \
     && dnf install -y nodejs           \
     && npm install pm2@latest -g       \
+    ### Install a number of requirements for the NodeJs Excel export
+    && dnf install -y nss atk at-spi2-atk cups-libs libdrm libxkbcommon libXdamage mesa-libgbm pango alsa-lib  \
+    ## Fix an issue with DV python packages
+    && ln -s /usr/lib64/libffi.so.8 /usr/lib64/libffi.so.6  \
+    && dnf clean all            \
     ### Prepare directories
     && mkdir -p ${ORACLE_BASE}  \
     && mkdir -p ${ORACLE_HOME}  \

@@ -84,7 +84,14 @@ function stopOAS {
 function startBIExcelExport {
   echo "Starting BI Excel Export"
   #pm2 start ${ORACLE_HOME}/bi/modules/oracle.bi.tech/obitech-serverside-exportexcel-bundle.js
-  NODE_PATH=${NPM_BI_EXCEL_EXPORT}/node_modules PUPPETEER_EXECUTABLE_PATH=$(cd "${NPM_BI_EXCEL_EXPORT}" && node -e "const p = require('puppeteer'); console.log(p.executablePath())") pm2 start ${ORACLE_HOME}/bi/modules/oracle.bi.tech/obitech-serverside-exportexcel-bundle.js --update-env
+  TMP_NODE_PATH=${NPM_BI_EXCEL_EXPORT}/node_modules
+  TMP_PUPPETEER_EXECUTABLE_PATH=$(cd "${NPM_BI_EXCEL_EXPORT}" && node -e "const p = require('puppeteer'); console.log(p.executablePath())")
+  echo "NodeJs variables:"
+  echo "- NODE_PATH=${TMP_NODE_PATH}"
+  echo "- PUPPETEER_EXECUTABLE_PATH=${TMP_PUPPETEER_EXECUTABLE_PATH}"
+  # TMP_PUPPETEER_EXECUTABLE_PATH has the wrong value for whatever reason, it does use the "other" (newer) chromium
+  #NODE_PATH=$TMP_NODE_PATH PUPPETEER_EXECUTABLE_PATH=$TMP_PUPPETEER_EXECUTABLE_PATH pm2 start ${ORACLE_HOME}/bi/modules/oracle.bi.tech/obitech-serverside-exportexcel-bundle.js
+  echo "!!! SKIP starting BI Excel Export !!!"
 }
 
 ############# Stop BI Excel Export ################
