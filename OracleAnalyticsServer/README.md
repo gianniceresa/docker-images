@@ -3,7 +3,7 @@ Oracle Analytics Server
 Sample Docker build files to facilitate installation, configuration, and environment setup for DevOps users. For more information about Oracle Analytic Server please see the [Oracle Analytics Server](https://docs.oracle.com/en/middleware/bi/analytics-server/books.html).
 
 ## How to build and run
-This project offers sample Dockerfiles for OAS (v5.5.0, v5.9.0, v6.4.0, v7.0.0, v7.6.0 and v8.2.0). To assist in building the images, you can use the [buildDockerImage.sh](buildDockerImage.sh) script. See below for instructions and usage.
+This project offers sample Dockerfiles for OAS (v5.5.0, v5.9.0, v6.4.0, v7.0.0, v7.6.0, v8.2.0, and 26.01.0.0.0). To assist in building the images, you can use the [buildDockerImage.sh](buildDockerImage.sh) script. See below for instructions and usage.
 
 The `buildDockerImage.sh` script is just a utility shell script that performs MD5 checks and is an easy way for beginners to get started. Expert users are welcome to directly call `docker build` with their prefered set of parameters.
 
@@ -19,7 +19,7 @@ Before you build the image make sure that you have provided the installation bin
   
   Parameters:
      -v: version to build
-         Choose one of: 5.5.0  5.9.0  6.4.0  7.0.0  7.6.0  8.2.0
+         Choose one of: 5.5.0  5.9.0  6.4.0  7.0.0  7.6.0  8.2.0 26.01.0.0.0
      -i: ignores the MD5 checksums
   
   LICENSE CDDL 1.0 + GPL 2.0
@@ -27,7 +27,7 @@ Before you build the image make sure that you have provided the installation bin
   Copyright (c) 2020 DATAlysis LLC (https://datalysis.ch). All rights reserved.
 ```
 
-The [OAS 6.4](./6.4.0/), [OAS 7.0](./7.0.0/), [OAS 7.6](./7.6.0/) and [OAS 8.2](./8.2.0/) images by default also expects various patches. On top of the [OAS 6.4](./6.4.0/Dockerfile), [OAS 7.0](./7.0.0/Dockerfile),  [OAS 7.6](./7.6.0/Dockerfile) and [OAS 8.2](./8.2.0/Dockerfile) Dockerfile they are listed with direct links for download. If you don't have a MOS subscription, you could edit the image to remove them (also from the checksum file). The product could still work but I didn't try it (you need to use a older JDK or you will not be able to login).
+The [OAS 6.4](./6.4.0/), [OAS 7.0](./7.0.0/), [OAS 7.6](./7.6.0/), [OAS 8.2](./8.2.0/), and [OAS 26.01.0.0.0](./26.01.0.0.0) images by default also expects various patches. On top of the [OAS 6.4](./6.4.0/Dockerfile), [OAS 7.0](./7.0.0/Dockerfile),  [OAS 7.6](./7.6.0/Dockerfile), [OAS 8.2](./8.2.0/Dockerfile), and [OAS 26.01.0.0.0](./26.01.0.0.0/Dockerfile) Dockerfile they are listed with direct links for download. If you don't have a MOS subscription, you could edit the image to remove them (also from the checksum file). The product could still work but I didn't try it (you need to use a older JDK or you will not be able to login).
 
 **IMPORTANT:** The resulting images will be an image with Weblogic and OAS installed. On first startup of the container the OAS configuration (domain, RCU, etc.) will be executed.
 
@@ -37,12 +37,12 @@ The [OAS 6.4](./6.4.0/), [OAS 7.0](./7.0.0/), [OAS 7.6](./7.6.0/) and [OAS 8.2](
 The first execution will be longer than next stop/start because OAS must be configured. Many parameters can be adjusted and 2 are mandatory to run the image or it will fail.
 To run your OAS Docker image use the **docker run** command as follows:
 ```
-  docker run --name oas2024 \
+  docker run --name oas2026 \
              -p 9500-9514:9500-9514 \
              --stop-timeout 600 \
              -e "BI_CONFIG_RCU_DBSTRING=192.168.120.80:1521:orclpdb1" \
              -e "BI_CONFIG_RCU_PWD=Admin123" \
-             oracle/oas:8.2.0
+             oracle/oas:26.01.0.0.0
   
   Parameters:
      --name :         The name of the container itself
@@ -63,6 +63,7 @@ Once the container has been started and OAS configured and started you can conne
   http://localhost:9500/em
   http://localhost:9502/dv
 ```
+In OAS 26.01.0.0.0 `http://localhost:9500/console` doesn't work anymore, you will need to use the [WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console).
 
 #### Stop / Start of Oracle Analytics Server after first execution
 Once the **docker run** has been used to configure OAS and start it for the first time it's possible to easily stop it with the following command:
@@ -122,4 +123,4 @@ To download and run Oracle Analytics Server, regardless whether inside or outsid
 All scripts and files hosted in this project and GitHub [docker-images/OracleAnalyticsServer](./) repository required to build the Docker images are, unless otherwise noted, released under the Common Development and Distribution License (CDDL) 1.0 and GNU Public License 2.0 licenses.
 
 ## Copyright
-Copyright (c) 2024 [DATAlysis LLC](https://datalysis.ch). All rights reserved.
+Copyright (c) 2026 [DATAlysis LLC](https://datalysis.ch). All rights reserved.

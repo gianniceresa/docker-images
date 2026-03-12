@@ -1,0 +1,18 @@
+# Oracle JDK 21.0.10
+327dbe85b49312b1af611229c2459120  jdk-21.0.10_linux-x64_bin.rpm
+# Oracle WebLogic Server 14.1.2.0 - Fusion Middleware Infrastructure Installer
+eb15e00de2b7cab41af69ef591069b8f  fmw_14.1.2.0.0_infrastructure.zip
+# Oracle Analytics Server 2026 (26.01.0.0.0)
+6c5326ca37813a2483f90f86b6eb19d4  Oracle_Analytics_Server_2026_Linux.zip
+# Patches
+# - OPatch
+e64218fdb09793c61a458b31145d5d2e  p28186730_1394222_Generic.zip
+# - WebLogic Server
+fd2ada4d37873f3821b04dff043a1096  p38799629_141200_Generic.zip
+# - FMW Infrastructure
+cd25b68ca123f4db51d87895cb91b906  p38566996_141200_Generic.zip
+e49dabda09113370ba99fc80b963d0c3  p38348367_141200_Generic.zip
+e02891db533a8bff3245a5c868f85876  p38679562_141200_Generic.zip
+0b136b41e1f20574f826591f7d193248  p38637356_141200_Generic.zip
+# - RCU compatibility with 26ai
+aefeb2785af065a02725e1d36e91a0cb  p38391376_141200_Generic.zip
