@@ -104,12 +104,16 @@ RUN useradd -d /home/oracle -m -s /bin/bash oracle  \
     && dnf -y install mesa-libgbm at-spi2-atk  \
     ### Install JDK
     && dnf -y install ${INSTALL_DIR}/${INSTALL_FILE_JDK}  \
-    && dnf clean all                                      \
     && rm ${INSTALL_DIR}/${INSTALL_FILE_JDK}              \
     ### Install NodeJs (and PM2)
     && dnf module enable -y nodejs:20  \
     && dnf install -y nodejs           \
     && npm install pm2@latest -g       \
+    ### Install a number of requirements for the NodeJs Excel export
+    && dnf install -y nss cups-libs libxkbcommon libXdamage pango alsa-lib  \
+    ## Fix missing package for DV python ML
+    && dnf install -y libxcrypt-compat                                      \
+    && dnf clean all                                                        \
     ### Prepare directories
     && mkdir -p ${ORACLE_BASE}  \
     && mkdir -p ${ORACLE_HOME}  \
