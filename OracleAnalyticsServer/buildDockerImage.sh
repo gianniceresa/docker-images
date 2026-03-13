@@ -15,11 +15,12 @@ cat << EOF
 
 Usage: buildDockerImage.sh -v [version] [-i]
 Builds a Docker Image for Oracle Analytics Server.
-  
+
 Parameters:
    -v: version to build
        Choose one of: $(for i in $(ls -d */); do echo -n "${i%%/}  "; done)
    -i: ignores the MD5 checksums
+   -o:  extra docker build options (passed to docker build)
 
 LICENSE CDDL 1.0 + GPL 2.0
 
@@ -47,7 +48,7 @@ VERSION="5.5.0"
 SKIPMD5=0
 DOCKEROPS=""
 
-while getopts "hiv:" optname; do
+while getopts "hiv:o:" optname; do
   case "$optname" in
     "h")
       usage
@@ -57,6 +58,9 @@ while getopts "hiv:" optname; do
       ;;
     "v")
       VERSION="$OPTARG"
+      ;;
+    "o")
+      DOCKEROPS="$OPTARG"
       ;;
     *)
     # Should not occur

@@ -1,9 +1,19 @@
 Oracle Analytics Server
 ===============
-Sample Docker build files to facilitate installation, configuration, and environment setup for DevOps users. For more information about Oracle Analytic Server please see the [Oracle Analytics Server](https://docs.oracle.com/en/middleware/bi/analytics-server/books.html).
+Sample Docker build files to facilitate installation, configuration, and environment setup for DevOps users. For more information about Oracle Analytic Server please see the [Oracle Analytics Server](https://docs.oracle.com/en/middleware/bi/analytics-server/books.html).  
+If you aren't familiar with the OAS versioning, use the following mapping of years to versions.
+| Year | Version |
+| --- | --- |
+| 2026 | 26.01.0.0.0 |
+| 2025 | 8.2.0 |
+| 2024 | 7.6.0 |
+| 2023 | 7.0.0 |
+| 2022 | 6.4.0 |
+| 2021 | 5.9.0 |
+| 2020 | 5.5.0 |
 
 ## How to build and run
-This project offers sample Dockerfiles for OAS (v5.5.0, v5.9.0, v6.4.0, v7.0.0, v7.6.0, v8.2.0, and 26.01.0.0.0). To assist in building the images, you can use the [buildDockerImage.sh](buildDockerImage.sh) script. See below for instructions and usage.
+This project offers sample Dockerfiles for OAS (v5.5.0, v5.9.0, v6.4.0, v7.0.0, v7.6.0, v8.2.0, and v26.01.0.0.0). To assist in building the images, you can use the [buildDockerImage.sh](buildDockerImage.sh) script. See below for instructions and usage.
 
 The `buildDockerImage.sh` script is just a utility shell script that performs MD5 checks and is an easy way for beginners to get started. Expert users are welcome to directly call `docker build` with their prefered set of parameters.
 
