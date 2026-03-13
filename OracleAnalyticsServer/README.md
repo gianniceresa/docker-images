@@ -29,8 +29,9 @@ Before you build the image make sure that you have provided the installation bin
   
   Parameters:
      -v: version to build
-         Choose one of: 5.5.0  5.9.0  6.4.0  7.0.0  7.6.0  8.2.0 26.01.0.0.0
+         Choose one of: 5.5.0  5.9.0  6.4.0  7.0.0  7.6.0  8.2.0  26.01.0.0.0
      -i: ignores the MD5 checksums
+     -o: extra docker build options
   
   LICENSE CDDL 1.0 + GPL 2.0
   

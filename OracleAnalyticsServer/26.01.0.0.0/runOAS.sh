@@ -84,11 +84,11 @@ function stopOAS {
 function startBIExcelExport {
   echo "Starting BI Excel Export"
   #pm2 start ${ORACLE_HOME}/bi/modules/oracle.bi.tech/obitech-serverside-exportexcel-bundle.js
-  TMP_NODE_PATH=${NPM_BI_EXCEL_EXPORT}/node_modules
-  TMP_PUPPETEER_EXECUTABLE_PATH=$(cd "${NPM_BI_EXCEL_EXPORT}" && node -e "const p = require('puppeteer'); console.log(p.executablePath())")
-  echo "NodeJs variables:"
-  echo "- NODE_PATH=${TMP_NODE_PATH}"
-  echo "- PUPPETEER_EXECUTABLE_PATH=${TMP_PUPPETEER_EXECUTABLE_PATH}"
+  #TMP_NODE_PATH=${NPM_BI_EXCEL_EXPORT}/node_modules
+  #TMP_PUPPETEER_EXECUTABLE_PATH=$(cd "${NPM_BI_EXCEL_EXPORT}" && NODE_PATH=${TMP_NODE_PATH} node -e "const p = require('puppeteer'); console.log(p.executablePath())")
+  #echo "NodeJs variables:"
+  #echo "- NODE_PATH=${TMP_NODE_PATH}"
+  #echo "- PUPPETEER_EXECUTABLE_PATH=${TMP_PUPPETEER_EXECUTABLE_PATH}"
   # TMP_PUPPETEER_EXECUTABLE_PATH has the wrong value for whatever reason, it does use the "other" (newer) chromium
   #NODE_PATH=$TMP_NODE_PATH PUPPETEER_EXECUTABLE_PATH=$TMP_PUPPETEER_EXECUTABLE_PATH pm2 start ${ORACLE_HOME}/bi/modules/oracle.bi.tech/obitech-serverside-exportexcel-bundle.js
   echo "!!! SKIP starting BI Excel Export !!!"
@@ -97,7 +97,8 @@ function startBIExcelExport {
 ############# Stop BI Excel Export ################
 function stopBIExcelExport {
   echo "Stopping BI Excel Export"
-  pm2 stop obitech-serverside-exportexcel-bundle
+  #pm2 stop obitech-serverside-exportexcel-bundle
+  echo "!!! SKIP stopping BI Excel Export (because not started) !!!"
 }
 
 ############# MAIN ################
@@ -127,7 +128,7 @@ fi;
 ## BI Excel export
 # export NODE_PATH= : defined in the `pm2 start` commmand
 # export PUPPETEER_EXECUTABLE_PATH : defined in the `pm2 start` command
-export OAS_FORMATTED_EXPORT_ENABLED=true
+#export OAS_FORMATTED_EXPORT_ENABLED=true
 ## Workbook Email Scheduler
 export NODE_PATH=${NPM_WORKBOOK_EMAIL_SCHEDULER}/node_modules
 export PUPPETEER_EXECUTABLE_PATH=$(cd "${NPM_WORKBOOK_EMAIL_SCHEDULER}" && node -e "const p = require('puppeteer'); console.log(p.executablePath())")
