@@ -7,6 +7,6 @@
     "jquery-deferred": "^0.3.1",
     "log4js": "6.4.1",
     "html-to-xlsx": "^2.2.0",
-    "puppeteer": "^20.7.4"
+    "puppeteer": "24.31.0"
   }
 }

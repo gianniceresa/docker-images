@@ -108,8 +108,8 @@ RUN useradd -d /home/oracle -m -s /bin/bash oracle  \
     && dnf module enable -y nodejs:24  \
     && dnf install -y nodejs npm       \
     && npm install pm2@latest -g       \
-    ### Install a number of requirements for the NodeJs Excel export
-    #&& dnf install -y nss atk at-spi2-atk cups-libs libdrm libxkbcommon libXdamage mesa-libgbm pango alsa-lib  \
+    ### Install a number of requirements for the NodeJs puppetter (chromium) package
+    && dnf install -y nspr nss atk at-spi2-atk cups-libs libxkbcommon libXdamage mesa-libgbm pango alsa-lib  \
     ## Fix an issue with DV python packages
     && ln -s libffi.so.8 /usr/lib64/libffi.so.6  \
     && dnf clean all            \
@@ -205,10 +205,10 @@ RUN cd ${INSTALL_DIR}  \
     && rm -rf ${INSTALL_DIR}                                                             \
     ### NodeJs pieces
     # BI Excel export
-    #&& mkdir -p ${NPM_BI_EXCEL_EXPORT}                                                   \
-    #&& cd ${NPM_BI_EXCEL_EXPORT}                                                         \
-    #&& mv ${ORACLE_BASE}/${PACKAGE_BI_EXCEL_EXPORT} ./package.json                       \
-    #&& npm install                                                                       \
+    && mkdir -p ${NPM_BI_EXCEL_EXPORT}                                                   \
+    && cd ${NPM_BI_EXCEL_EXPORT}                                                         \
+    && mv ${ORACLE_BASE}/${PACKAGE_BI_EXCEL_EXPORT} ./package.json                       \
+    && npm install                                                                       \
     # Workbook Email Scheduler
     && mkdir -p ${NPM_WORKBOOK_EMAIL_SCHEDULER}                                          \
     && cd ${NPM_WORKBOOK_EMAIL_SCHEDULER}                                                \
