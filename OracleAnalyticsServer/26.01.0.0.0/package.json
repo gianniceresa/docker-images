@@ -1,11 +1,14 @@
 {
-  "name": "workbook-email-scheduler",
+  "name": "oas2026-nodejs-modules",
   "version": "1.0.0",
-  "description": "OAS 2026 - Workbook email scheduler",
+  "description": "OAS 2026 - Node.js modules for BI Excel Export and Workbook Email Scheduler",
   "dependencies": {
+    "express": "^4.17",
+    "jquery-deferred": "^0.3.1",
+    "log4js": "6.9.1",
+    "html-to-xlsx": "^2.2.0",
     "puppeteer": "24.31.0",
     "cls-hooked": "4.2.2",
-    "log4js": "6.9.1",
     "fs-extra": "11.3.2",
     "access-log": "0.4.1",
     "prom-client": "15.1.3",

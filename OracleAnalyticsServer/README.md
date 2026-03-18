@@ -40,7 +40,10 @@ Before you build the image make sure that you have provided the installation bin
 
 The [OAS 6.4](./6.4.0/), [OAS 7.0](./7.0.0/), [OAS 7.6](./7.6.0/), [OAS 8.2](./8.2.0/), and [OAS 26.01.0.0.0](./26.01.0.0.0) images by default also expects various patches. On top of the [OAS 6.4](./6.4.0/Dockerfile), [OAS 7.0](./7.0.0/Dockerfile),  [OAS 7.6](./7.6.0/Dockerfile), [OAS 8.2](./8.2.0/Dockerfile), and [OAS 26.01.0.0.0](./26.01.0.0.0/Dockerfile) Dockerfile they are listed with direct links for download. If you don't have a MOS subscription, you could edit the image to remove them (also from the checksum file). The product could still work but I didn't try it (you need to use a older JDK or you will not be able to login).
 
-**IMPORTANT:** The resulting images will be an image with Weblogic and OAS installed. On first startup of the container the OAS configuration (domain, RCU, etc.) will be executed.
+**IMPORTANT:** The resulting images will be an image with WebLogic, Fusion Middleware and OAS installed. On first startup of the container the OAS configuration (domain, RCU, etc.) will be executed.
+
+#### Works with podman
+If you have the `podman-docker` package installed, or an alias pointing `docker` to `podman`, you can use the scripts as is. To get a smaller final image, you can pass a parameter to squash all the layers, for example: `./buildDockerImage.sh -v 26.01.0.0.0 -o "--squash-all"`
 
 ### Running Oracle Analytics Server in a Docker container
 

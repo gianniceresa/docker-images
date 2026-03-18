@@ -74,21 +74,18 @@ ENV OAS_VERSION="26.01.0.0.0"                         \
     INSTALL_RSP_WLS="weblogic.rsp"     \
     INSTALL_RSP_OAS="oas_install.rsp"  \
     CONFIG_RSP_OAS="oas_config.rsp"    \
-    RUN_FILE="runOAS.sh"               \
-    PACKAGE_BI_EXCEL_EXPORT="package_bi_excel_export.json"                    \
-    PACKAGE_WORKBOOK_EMAIL_SCHEDULER="package_workbook_email_scheduler.json"
+    RUN_FILE="runOAS.sh"
 
 # Use second ENV so that variables get substituted
-ENV INSTALL_DIR=${ORACLE_BASE}/install                       \
-    ORACLE_HOME=${ORACLE_BASE}/product/${OAS_VERSION}        \
-    DOMAIN_HOME=${ORACLE_BASE}/config/domains                \
-    NPM_BI_EXCEL_EXPORT=${ORACLE_BASE}/npm/bi_excel_export   \
-    NPM_WORKBOOK_EMAIL_SCHEDULER=${ORACLE_BASE}/npm/workbook_email_scheduler
+ENV INSTALL_DIR=${ORACLE_BASE}/install                 \
+    ORACLE_HOME=${ORACLE_BASE}/product/${OAS_VERSION}  \
+    DOMAIN_HOME=${ORACLE_BASE}/config/domains          \
+    NODEJS_MODULES=${ORACLE_BASE}/nodejs
 
 # Copy binaries
 # -------------
 COPY ${INSTALL_FILE_JDK} ${INSTALL_FILE_WLS} ${INSTALL_FILE_OAS} ${INSTALL_FILE_OPATCH} ${PATCH_FILE_WLS01} ${PATCH_FILE_FMW01} ${PATCH_FILE_FMW02} ${PATCH_FILE_FMW03} ${PATCH_FILE_FMW04} ${PATCH_FILE_FMW05} ${PATCH_FILE_FMW06} ${INSTALL_DIR}/
-COPY ${INSTALL_RSP_WLS} ${INSTALL_RSP_OAS} ${CONFIG_RSP_OAS} ${RUN_FILE} _configureOAS.sh _validateRCU.sh _dropRCU.sh ${PACKAGE_BI_EXCEL_EXPORT} ${PACKAGE_WORKBOOK_EMAIL_SCHEDULER} ${ORACLE_BASE}/
+COPY ${INSTALL_RSP_WLS} ${INSTALL_RSP_OAS} ${CONFIG_RSP_OAS} ${RUN_FILE} _configureOAS.sh _validateRCU.sh _dropRCU.sh package.json ${ORACLE_BASE}/
 
 # Setup filesystem and 'oracle' user
 # Adjust file permissions, go to 'ORACLE_HOME' as 'oracle' to proceed with OAS installation
@@ -108,7 +105,7 @@ RUN useradd -d /home/oracle -m -s /bin/bash oracle  \
     && dnf module enable -y nodejs:24  \
     && dnf install -y nodejs npm       \
     && npm install pm2@latest -g       \
-    ### Install a number of requirements for the NodeJs puppetter (chromium) package
+    ### Install a number of requirements for the Node.js puppetter (chromium) package
     && dnf install -y nspr nss atk at-spi2-atk cups-libs libxkbcommon libXdamage mesa-libgbm pango alsa-lib  \
     ## Fix an issue with DV python packages
     && ln -s libffi.so.8 /usr/lib64/libffi.so.6  \
@@ -203,16 +200,10 @@ RUN cd ${INSTALL_DIR}  \
     # clean up
     && cd ${ORACLE_BASE}                                                                 \
     && rm -rf ${INSTALL_DIR}                                                             \
-    ### NodeJs pieces
-    # BI Excel export
-    && mkdir -p ${NPM_BI_EXCEL_EXPORT}                                                   \
-    && cd ${NPM_BI_EXCEL_EXPORT}                                                         \
-    && mv ${ORACLE_BASE}/${PACKAGE_BI_EXCEL_EXPORT} ./package.json                       \
-    && npm install                                                                       \
-    # Workbook Email Scheduler
-    && mkdir -p ${NPM_WORKBOOK_EMAIL_SCHEDULER}                                          \
-    && cd ${NPM_WORKBOOK_EMAIL_SCHEDULER}                                                \
-    && mv ${ORACLE_BASE}/${PACKAGE_WORKBOOK_EMAIL_SCHEDULER} ./package.json              \
+    ### Node.js modules
+    && mkdir -p ${NODEJS_MODULES}                                                        \
+    && mv ${ORACLE_BASE}/package.json ${NODEJS_MODULES}/package.json                     \
+    && cd ${NODEJS_MODULES}                                                              \
     && npm install
 
 # Set work directory

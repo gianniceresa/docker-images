@@ -88,13 +88,8 @@ function startBIExcelExport {
   fi
 
   echo "Starting BI Excel Export"
-  NODE_PATH=${NPM_BI_EXCEL_EXPORT}/node_modules
-  PUPPETEER_EXECUTABLE_PATH=$(cd "${NPM_BI_EXCEL_EXPORT}" && NODE_PATH=${NODE_PATH} node -e "const p = require('puppeteer'); console.log(p.executablePath())")
-  echo "  NodeJs variables:"
-  echo "  - NODE_PATH=${NODE_PATH}"
-  echo "  - PUPPETEER_EXECUTABLE_PATH=${PUPPETEER_EXECUTABLE_PATH}"
-  NODE_PATH=$NODE_PATH PUPPETEER_EXECUTABLE_PATH=$PUPPETEER_EXECUTABLE_PATH pm2 start ${ORACLE_HOME}/bi/modules/oracle.bi.tech/obitech-serverside-exportexcel-bundle.js --name bi_excel_export
-  echo "  The process can be monitored with \`pm2 logs bi_excel_export\`"
+  echo "- The process can be monitored with \`pm2 logs bi_excel_export\`"
+  pm2 start ${ORACLE_HOME}/bi/modules/oracle.bi.tech/obitech-serverside-exportexcel-bundle.js --name bi_excel_export
 }
 
 ############# Stop BI Excel Export ################
@@ -126,14 +121,12 @@ else
 fi;
 
 
-# Set some env variables for NodeJs pieces
+# Set some env variables for Node.js pieces
+export NODE_PATH=${NODEJS_MODULES}/node_modules
+export PUPPETEER_EXECUTABLE_PATH=$(cd "${NODEJS_MODULES}" && node -e "const p = require('puppeteer'); console.log(p.executablePath())")
 ## BI Excel export
-# export NODE_PATH= : defined in the `pm2 start` commmand
-# export PUPPETEER_EXECUTABLE_PATH : defined in the `pm2 start` command
 export OAS_FORMATTED_EXPORT_ENABLED=true
 ## Workbook Email Scheduler
-export NODE_PATH=${NPM_WORKBOOK_EMAIL_SCHEDULER}/node_modules
-export PUPPETEER_EXECUTABLE_PATH=$(cd "${NPM_WORKBOOK_EMAIL_SCHEDULER}" && node -e "const p = require('puppeteer'); console.log(p.executablePath())")
 export OAS_ENABLED=true
 export OAS_WORKBOOK_SCHEDULE_ENABLED=true
 
