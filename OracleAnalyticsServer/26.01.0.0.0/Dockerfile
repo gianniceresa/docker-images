@@ -95,8 +95,8 @@ COPY ${INSTALL_RSP_WLS} ${INSTALL_RSP_OAS} ${CONFIG_RSP_OAS} ${RUN_FILE} _config
 RUN useradd -d /home/oracle -m -s /bin/bash oracle  \
     && echo oracle:oracle | chpasswd                \
     ### Update OS + install required packages
-    && dnf -y update                  \
-    && dnf -y install hostname unzip  \
+    && dnf -y update                     \
+    && dnf -y install hostname unzip jq  \
     && dnf -y install binutils gcc gcc-c++ glibc glibc-devel libaio libaio-devel libgcc libstdc++ libstdc++-devel libnsl sysstat motif motif-devel openssl make xorg-x11-utils ksh libcap libgfortran libxcrypt-compat  \
     ### Install JDK
     && dnf -y install ${INSTALL_DIR}/${INSTALL_FILE_JDK}  \
